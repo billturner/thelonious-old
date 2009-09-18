@@ -10,7 +10,7 @@ set :environment, (ENV['RACK_ENV'] ? ENV['RACK_ENV'].to_sym : :production)
 DataMapper::Logger.new(STDOUT, :debug)
 
 # config & db connection ( + models )
-Dir['config/*.rb'].each {|file| require file }
+['config/settings.rb', 'config/database.rb'].each {|file| require file }
 
 # routing & actions
 get '/' do
