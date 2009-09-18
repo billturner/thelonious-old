@@ -1,10 +1,10 @@
 class Post
-    include DataMapper::Resource
-    property :id, Serial
-    property :title, String
-    property :body, Text
-    property :created_at, DateTime
+  include DataMapper::Resource
+  property :id, Serial
+  property :title, String
+  property :body, Text
+  property :created_at, DateTime
 end
 
 # automatically create the post table
-Post.auto_migrate! unless Post.table_exists?
+Post.table_exists? ? Post.auto_upgrade! : Post.auto_migrate!

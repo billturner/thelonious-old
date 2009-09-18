@@ -1,0 +1,5 @@
+# haml settings
+set :haml, :format => :html5
+
+# site-wide variables
+BLOG_TITLE = 'My Weblog'

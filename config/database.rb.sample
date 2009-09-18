@@ -1,1 +1,23 @@
-DataMapper::setup(:default, "sqlite://#{Dir.pwd}/blog.db")
+configure :production do
+
+  DataMapper.setup(:default, {
+    :adapter  => 'mysql',
+    :host     => 'localhost',
+    :username => 'user' ,
+    :password => 'pass',
+    :database => 'sinatrablog_production'
+  })
+
+end
+
+configure :test do
+
+  DataMapper.setup(:default, {
+    :adapter  => 'mysql',
+    :host     => 'localhost',
+    :username => 'user' ,
+    :password => 'pass',
+    :database => 'sinatrablog_test'
+  })
+
+end
