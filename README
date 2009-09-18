@@ -8,3 +8,7 @@ I'm writing this one to get a better grasp on:
 * Datamapper <http://datamapper.org/doku.php>
 
 We'll see how it goes.
+
+TODO (besides the obvious):
+
+* Have config/database.rb create the database itself if not available

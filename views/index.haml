@@ -1,2 +1,4 @@
-%h2 hi
-%div= @posts.inspect
+%h2= @page_title
+%div
+  -@posts.each do |post|
+    %h3= post.title

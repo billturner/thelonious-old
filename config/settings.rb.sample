@@ -3,3 +3,5 @@ set :haml, :format => :html5
 
 # site-wide variables
 BLOG_TITLE = 'My Weblog'
+BLOG_AUTHOR = 'Bart Simpson'
+BLOG_URL = 'http://localhost:4567'

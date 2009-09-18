@@ -1,7 +1,11 @@
 !!!
 %html{ :lang => "en", "xml:lang" => "en", :xmlns => 'http://www.w3.org/1999/xhtml' }
 %head
-  %title= @title
+  %title
+    -if !@page_title.nil?
+      =@page_title
+      |
+    =BLOG_TITLE
   %link{ :href => "/style.css", :media => "all", :rel => "stylesheet", :type => "text/css" }
 %body
   #container
