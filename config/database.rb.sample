@@ -21,3 +21,6 @@ configure :test do
   })
 
 end
+
+# load model files
+Dir['app/models/*.rb'].each { |file| require file }

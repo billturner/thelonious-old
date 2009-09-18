@@ -3,10 +3,19 @@
   require lib
 end
 
-require 'config/settings'
+# temporarily here:
+set :environment, (ENV['RACK_ENV'] ? ENV['RACK_ENV'].to_sym : :production)
 
-# routing / actions
+# Set up db logging
+DataMapper::Logger.new(STDOUT, :debug)
+
+# config & db connection ( + models )
+Dir['config/*.rb'].each {|file| require file }
+
+# routing & actions
 get '/' do
+  @page_title = "Weblog Posts"
+  @posts = Post.all
   haml :index
 end
 

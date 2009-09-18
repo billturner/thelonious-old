@@ -7,4 +7,4 @@ class Post
 end
 
 # automatically create the post table
-Post.table_exists? ? Post.auto_upgrade! : Post.auto_migrate!
+DataMapper.repository.storage_exists?(Post) ? Post.auto_upgrade! : Post.auto_migrate!
