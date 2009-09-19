@@ -1,5 +1,5 @@
 # libs
-%w(rubygems sinatra dm-core haml sass).each do |lib|
+%w(rubygems sinatra dm-core haml sass rdiscount).each do |lib|
   require lib
 end
 
@@ -19,7 +19,14 @@ get '/' do
   haml :index
 end
 
+# stylesheet
 get '/style.css' do
   headers 'Content-Type' => 'text/css; charset=utf-8'
   sass :style
+end
+
+# viewing a post
+get '/post/:id' do
+  @post = Post.first(:slug => params[:id])
+  haml :post
 end
