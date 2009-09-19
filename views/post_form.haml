@@ -1,0 +1,13 @@
+%dl
+  %dt
+    Post Title:
+  %dd
+    %input{ :type => 'text', :name => 'post[title]', :value => @post.title, :size => 50 }
+  %dt
+    Post Body:
+  %dd
+    =find_and_preserve do
+      %textarea{ :name => 'post[body]', :cols => 40, :rows => 7 } 
+        =@post.body
+  %dt
+    %input{ :type => 'submit' }

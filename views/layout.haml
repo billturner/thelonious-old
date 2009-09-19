@@ -1,5 +1,5 @@
 !!!
-%html{ :lang => "en", "xml:lang" => "en", :xmlns => 'http://www.w3.org/1999/xhtml' }
+%html
 %head
   %title
     -if !@page_title.nil?
@@ -12,11 +12,11 @@
     .header
       %h1
         %a{ :href => '/', :rel => 'bookmark home' }= BLOG_TITLE
-      .navigation
-        %ul
-          %li
-            %a{ :href => '/archives', :rel => 'bookmark' } Archives
-          %li
-            %a{ :href => '/rss' } RSS
+      / .navigation
+      /   %ul
+      /     %li
+      /       %a{ :href => '/archives', :rel => 'bookmark' } Archives
+      /     %li
+      /       %a{ :href => '/rss' } RSS
     .content
       =yield
