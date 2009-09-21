@@ -22,6 +22,12 @@ helpers do
   
 end
 
+# errors
+not_found do
+  @page_title = "404 (Not Found)"
+  haml :error404
+end
+
 # routing & actions
 get '/' do 
   @posts = Post.all
@@ -31,8 +37,16 @@ end
 
 get "/:year/:month/:slug" do
   @post = Post.first(:slug => params[:slug])
+  raise not_found unless @page
   @page_title = @post.title
-  haml :view
+  haml :post
+end
+
+get "/page/:slug" do
+  @page = Page.first(:slug => params[:slug])
+  raise not_found unless @page
+  @page_title = @page.title
+  haml :page
 end
 
 # stylesheet
@@ -41,25 +55,50 @@ get '/style.css' do
   sass :style
 end
 
+## POSTS
 # Add a new post
-get '/new' do
+get '/new_post' do
   @page_title = "Add Post"
   @post = Post.new
-  haml :new
+  haml :new_post
 end
-post '/new' do
+post '/new_post' do
   @post = Post.create(params[:post])
   redirect '/'
 end
 
 # Edit existing post
-get '/edit/:id' do
+get '/edit_post/:id' do
   @page_title = "Edit Post"
   @post = Post.get(params[:id])
-  haml :edit
+  haml :edit_post
 end
-post '/edit/:id' do
+post '/edit_post/:id' do
   @post = Post.get(params[:id])
   @post.update(params[:post])
+  redirect '/'
+end
+
+## PAGES
+# Add a new page
+get '/new_page' do
+  @page_title = "Add Page"
+  @page = Page.new
+  haml :new_page
+end
+post '/new_page' do
+  @page = Page.create(params[:page])
+  redirect '/'
+end
+
+# Edit existing page
+get '/edit_page/:id' do
+  @page_title = "Edit Page"
+  @page = Page.get(params[:id])
+  haml :edit_page
+end
+post '/edit_page/:id' do
+  @page = Page.get(params[:id])
+  @page.update(params[:page])
   redirect '/'
 end

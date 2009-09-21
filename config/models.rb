@@ -21,9 +21,6 @@ class Post
     
 end
 
-# automatically create or upgrade the post table
-#Post.storage_exists? ? Post.auto_upgrade! : Post.auto_migrate!
-
 class Tagging
   
   include DataMapper::Resource
@@ -59,6 +56,7 @@ class Tag
 end
 
 class User
+  
   include DataMapper::Resource
   property :id,         Serial
   property :login,      String
@@ -66,9 +64,11 @@ class User
   property :salt,       Text
   property :created_at, DateTime
   property :updated_at, DateTime
+
 end
 
 class Page
+
   include DataMapper::Resource
   property :id,         Serial
   property :title,      String,   :length => 255
@@ -76,4 +76,13 @@ class Page
   property :body,       Text
   property :created_at, DateTime
   property :updated_at, DateTime
+
+  after :create, :generate_slug
+  
+  private
+    
+    def generate_slug
+      self.update(:slug => "#{title.gsub(/[^a-z0-9]+/i, '-').gsub(/-$/, '').downcase}")
+    end
+
 end

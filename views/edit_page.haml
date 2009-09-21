@@ -1,0 +1,3 @@
+%h2= @page_title
+%form{ :method => 'POST', :action => "/edit_page/#{@page.id}" }
+  =haml :page_form, :layout => false
