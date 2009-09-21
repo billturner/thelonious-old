@@ -3,9 +3,6 @@
   require lib
 end
 
-# temporarily here:
-set :environment, (ENV['RACK_ENV'] ? ENV['RACK_ENV'].to_sym : :development)
-
 # Set up db logging
 DataMapper::Logger.new(STDOUT, :debug)
 
