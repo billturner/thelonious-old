@@ -1,6 +1,7 @@
 !base_serif = "Times New Roman"
 !base_sans = "Helvetica, Arial, sans-serif"
 !post_title_font = "Georgia, Times New Roman, serif"
+!post_title_link_color = "#800"
 
 // reset-revised.sass
 // Generated 04/07/2008
@@ -153,46 +154,63 @@ caption, tbody, tfoot, thead, tr, th, td
 
 *:focus
   :outline 0
+// end reset css in sass
 
 body
-  font-family = !base_sans
-  text-align: center
+  :font-family = !base_sans
+  :text-align center
 
 #container
-  width: 600px
-  margin: 20px auto
-  text-align: left
+  :width 600px
+  :margin 20px auto
+  :text-align left
 
 dl
-  padding: 4px
+  :padding 4px
 
 dd
-  margin-left: 8px
+  :margin-left 8px
   
-form
-  margin: 0
-  padding: 0
-
 .navigation
-  padding: 3px
-  text-align: right
+  :padding 3px
+  :text-align right
   form
-    display: inline
+    :display inline
 
 .post
-  padding: 2px 0
+  :padding 2px 0 10px 0
   h3
-    font-family = !post_title_font
-    font-weight: normal
-    font-size: 2em
-
+    :font-family = !post_title_font
+    :font-weight normal
+    :font-size 1.8em
+    :margin-bottom 5px
+    a
+      :text-decoration none
+      :color = !post_title_link_color
+  p
+    :margin 5px 0
+    :padding 3px 0
+    
+// post tag links & date
 .meta
-  padding: 2px 0
-  color: #aaa
+  :padding 4px 0
+  :color #aaa
   a
-    text-decoration: none
-    color: #ccc
+    :text-decoration none
+    :color #ccc
   a:hover
-    text-decoration: underline
+    :text-decoration underline
   span.date
-    font-weight: bold
+    :font-weight bold
+
+// various
+code
+  :font-family 'Courier New', Courier, monospace
+  :line-height 1.3
+
+pre
+  :margin 10px 0
+  :padding 10px
+  :overflow auto
+  :width 95%
+  

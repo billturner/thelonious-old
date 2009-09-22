@@ -9,7 +9,7 @@
   %link{ :href => "/style.css", :media => "all", :rel => "stylesheet", :type => "text/css" }
 %body
   #container
-    .header
+    #header
       %h1
         %a{ :href => '/', :rel => 'bookmark home' }= BLOG_TITLE
       / .navigation
@@ -18,5 +18,14 @@
       /       %a{ :href => '/archives', :rel => 'bookmark' } Archives
       /     %li
       /       %a{ :href => '/rss' } RSS
-    .content
+    #content
       =yield
+    #boxes
+    #footer
+      %p
+        %strong= BLOG_TITLE
+        and all content copyright &copy;
+        ="#{Date.today.year},"
+        =BLOG_AUTHOR + '.'
+        Powered by 
+        %a{ :href => 'http://github.com/billturner/sinatrablog' } Sinatrablog
