@@ -10,4 +10,13 @@
       %textarea{ :name => 'post[body]', :cols => 50, :rows => 20 } 
         =@post.body
   %dt
+    Post Tags:
+  %dd
+    %input{ :type => 'text', :name => 'post[taglist]', :value => @post.tags.map{ |tag| tag.name }.join(", "), :size => 50 }
+  %dt
+    Publish?
+  %dd
+    %input{ :type => 'checkbox', :name => 'post[published]', :value => 1 } Yes
+
+  %dt
     %input{ :type => 'submit' }

@@ -20,6 +20,11 @@ helpers do
     RDiscount.new(text).to_html
   end
   
+  def tag_url(tag)
+    "#{BLOG_URL}/tag/#{tag.name}"
+  end
+  
+  
 end
 
 # errors
@@ -30,16 +35,16 @@ end
 
 # routing & actions
 get '/' do 
-  @posts = Post.all
+  @posts = Post.recently_published
   @page_title = "Weblog Posts"
   haml :index
 end
 
 get "/:year/:month/:slug" do
   @post = Post.first(:slug => params[:slug])
-  raise not_found unless @page
+  raise not_found unless @post
   @page_title = @post.title
-  haml :post
+  haml :post, :locals => { :post => @post }
 end
 
 get "/page/:slug" do
@@ -47,6 +52,13 @@ get "/page/:slug" do
   raise not_found unless @page
   @page_title = @page.title
   haml :page
+end
+
+get "/tag/:slug" do
+  tag = Tag.first(:slug => params[:slug])
+  raise not_found unless tag
+  @posts = tag.posts(:published => true, :order => [:published_at.desc])
+  haml :index
 end
 
 # stylesheet

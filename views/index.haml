@@ -1,5 +1,4 @@
 %h2= @page_title
-%div
+%div#posts
   -@posts.each do |post|
-    %h3
-      %a{ :href => permalink_url(post), :rel => 'bookmark' }= post.title
+    =haml :post, :layout => false, :locals => { :post => post }

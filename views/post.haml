@@ -1,4 +1,13 @@
-%h2
-  =@post.title
 %div.post
-  =markdown(@post.body)
+  %h3
+    %a{ :href => permalink_url(post), :rel => 'bookmark', :title => "Permanent link for this post" }= post.title
+  %div.postbody 
+    =find_and_preserve do
+      =markdown(post.body)
+  %div.meta
+    -if post.tags.count > 0
+      -post.tags.each do |tag|
+        %a{ :href => tag_url(tag), :rel => 'category tag', :title => "View other posts tagged with '#{tag.name}'" }= "##{tag.name}"
+    &mdash;
+    =post.published_at.strftime('%Y-%m-%d %I:%M%p')
+  

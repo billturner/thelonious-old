@@ -3,3 +3,4 @@
 **/.DS_Store
 config/database.rb
 config/settings.rb
+tmp/*
