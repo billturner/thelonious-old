@@ -5,3 +5,14 @@ set :haml, :format => :html5
 BLOG_TITLE = 'My Weblog'
 BLOG_AUTHOR = 'Bart Simpson'
 BLOG_URL = 'http://localhost:4567'
+
+# manage signups
+ALLOW_NEW_ACCOUNTS = false
+
+# comments by disqus
+ALLOW_COMMENTS = false
+DISQUS_SHORTNAME = 'weblogname'
+
+# google analytics tracking id
+USE_GOOGLE_ANALYTICS = false
+GOOGLE_ANALYTICS_ID = 'UA-XXXXX-X'

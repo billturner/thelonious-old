@@ -44,7 +44,7 @@ get "/:year/:month/:slug" do
   @post = Post.first(:slug => params[:slug])
   raise not_found unless @post
   @page_title = @post.title
-  haml :post, :locals => { :post => @post }
+  haml :post, :locals => { :post => @post, :type => 'single' }
 end
 
 get "/page/:slug" do
@@ -55,9 +55,9 @@ get "/page/:slug" do
 end
 
 get "/tag/:slug" do
-  tag = Tag.first(:slug => params[:slug])
-  raise not_found unless tag
-  @posts = tag.posts(:published => true, :order => [:published_at.desc])
+  @tag = Tag.first(:slug => params[:slug])
+  raise not_found unless @tag
+  @posts = @tag.posts(:published => true, :order => [:published_at.desc])
   haml :index
 end
 
@@ -78,7 +78,6 @@ post '/new_post' do
   @post = Post.create(params[:post])
   redirect '/'
 end
-
 # Edit existing post
 get '/edit_post/:id' do
   @page_title = "Edit Post"
