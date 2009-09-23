@@ -23,12 +23,14 @@ helpers do
   def tag_url(tag)
     "#{BLOG_URL}/tag/#{tag.name}"
   end
+
+  def cdata(text)
+    "<![CDATA[#{text}]]>"
+  end
   
   def cdata_and_escape(text)
     "<![CDATA[#{escape_html(text)}]]>"
   end
-  
-  
   
 end
 

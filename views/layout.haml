@@ -12,12 +12,12 @@
       #header
         %h1
           %a{ :href => '/', :rel => 'bookmark home' }= BLOG_TITLE
-        / .navigation
-        /   %ul
-        /     %li
-        /       %a{ :href => '/archives', :rel => 'bookmark' } Archives
-        /     %li
-        /       %a{ :href => '/rss' } RSS
+        .navigation
+          %ul
+            %li
+              %a{ :href => '/archives', :rel => 'bookmark' } Archives
+            %li
+              %a{ :href => '/rss' } RSS
       #content
         =yield
       #boxes
