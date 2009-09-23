@@ -1,0 +1,19 @@
+!!! XML
+%rss{ :version => "2.0", :"xmlns:atom" => "http://www.w3.org/2005/Atom" }
+  %channel
+    %title= BLOG_TITLE
+    %link= "#{BLOG_URL}/"
+    %atom:link{ :href => "#{BLOG_URL}/rss", :rel => "self", :type => "application/rss+xml" }
+    %description= escape_html(BLOG_DESCRIPTION)
+    %lastBuildDate= @posts.first.published_at.rfc822
+    %language en
+    -@posts.each do |post|
+      %item
+        %title= escape_html(post.title)
+        %link= permalink_url(post)
+        %guid{ :isPermaLink => 'false' }= "#{post.id}@#{BLOG_URL}/"
+        %pubDate= post.published_at.rfc822
+        %description= cdata_and_escape(markdown(post.body))
+        -if post.tags.length > 0
+          -post.tags.each do |tag|
+            %category= cdata_and_escape(tag.name)

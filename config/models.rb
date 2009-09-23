@@ -25,7 +25,7 @@ class Post
     class << self
       
       def recently_published
-        self.all(:published => true, :order => [:published_at.desc], :limit => 10)
+        self.all(:published => true, :order => [:published_at.desc], :limit => 15)
       end
       
     end

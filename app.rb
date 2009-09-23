@@ -24,6 +24,11 @@ helpers do
     "#{BLOG_URL}/tag/#{tag.name}"
   end
   
+  def cdata_and_escape(text)
+    "<![CDATA[#{escape_html(text)}]]>"
+  end
+  
+  
   
 end
 
@@ -60,6 +65,17 @@ get "/tag/:slug" do
   @posts = @tag.posts(:published => true, :order => [:published_at.desc])
   haml :index
 end
+
+get "/rss/?" do
+    @posts = Post.recently_published
+    content_type 'application/rss+xml', :charset => 'utf-8'
+    haml :rss, :layout => false
+end
+
+# get "/rss/?" do
+#   @posts = Post.recently_published
+#   haml :feed, :layout => false
+# end
 
 # stylesheet
 get '/style.css' do
