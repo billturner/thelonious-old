@@ -1,4 +1,4 @@
 %h2= @page_title
 %div#posts
   -@posts.each do |post|
-    =haml :post, :layout => false, :locals => { :post => post }
+    =haml :single_post, :layout => false, :locals => { :post => post }

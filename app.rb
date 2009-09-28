@@ -55,7 +55,7 @@ get "/:year/:month/:slug" do
   @post = Post.first(:slug => params[:slug])
   raise not_found unless @post
   @page_title = @post.title
-  haml :post
+  haml :post, :locals => { :post => @post }
 end
 
 get "/page/:slug" do
