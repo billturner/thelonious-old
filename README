@@ -11,8 +11,6 @@ We'll see how it goes.
 
 TODO:
 
-* RSS feed
-* set up auth!
-* make CSS a little more customizable
+* Make some admin pages (maybe?)
 * write some tests
 * Have config/database.rb create the database itself if not available

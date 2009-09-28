@@ -95,18 +95,6 @@ class Tag
     
 end
 
-class User
-  
-  include DataMapper::Resource
-  property :id,         Serial
-  property :login,      String
-  property :password,   Text
-  property :salt,       Text
-  property :created_at, DateTime
-  property :updated_at, DateTime
-
-end
-
 class Page
 
   include DataMapper::Resource

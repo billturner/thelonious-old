@@ -36,6 +36,14 @@ helpers do
     "<![CDATA[#{escape_html(text)}]]>"
   end
   
+  def authenticate!
+    redirect '/login' unless logged_in?
+  end
+  
+  def logged_in?
+    session[:user]
+  end
+  
 end
 
 # errors
@@ -98,28 +106,46 @@ get '/stylesheets/style.css' do
   sass :"stylesheets/style", :sass => Compass.sass_engine_options
 end
 
+## AUTHENTICATION STUFF
+get '/login' do
+  @page_title = 'Please log in'
+  haml :login
+end
+post '/login' do
+  if params[:login][:username] == LOGIN_USERNAME && params[:login][:password] == LOGIN_PASSWORD
+    session[:user] = LOGIN_USERNAME
+    redirect '/'
+  else
+    redirect '/login'
+  end
+end
+get '/logout' do
+  session[:user] = nil
+  redirect '/'
+end
+
 ## POSTS
 # Add a new post
 get '/new_post' do
-  #authenticate
+  authenticate!
   @page_title = "Add Post"
   @post = Post.new
   haml :new_post
 end
 post '/new_post' do
-  #authenticate
+  authenticate!
   @post = Post.create(params[:post])
   redirect '/'
 end
 # Edit existing post
 get '/edit_post/:id' do
-  #authenticate
+  authenticate!
   @page_title = "Edit Post"
   @post = Post.get(params[:id])
   haml :edit_post
 end
 post '/edit_post/:id' do
-  #authenticate
+  authenticate!
   @post = Post.get(params[:id])
   @post.update(params[:post])
   redirect '/'
@@ -128,26 +154,26 @@ end
 ## PAGES
 # Add a new page
 get '/new_page' do
-  #authenticate
+  authenticate!
   @page_title = "Add Page"
   @page = Page.new
   haml :new_page
 end
 post '/new_page' do
-  #authenticate
+  authenticate!
   @page = Page.create(params[:page])
   redirect '/'
 end
 
 # Edit existing page
 get '/edit_page/:id' do
-  #authenticate
+  authenticate!
   @page_title = "Edit Page"
   @page = Page.get(params[:id])
   haml :edit_page
 end
 post '/edit_page/:id' do
-  #authenticate
+  authenticate!
   @page = Page.get(params[:id])
   @page.update(params[:page])
   redirect '/'

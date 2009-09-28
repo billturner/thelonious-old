@@ -1,0 +1,14 @@
+%h2= @page_title
+%form{ :method => 'POST', :action => "/login" }
+  %dl
+    %dt
+      Username:
+    %dd
+      %input{ :type => 'text', :name => 'login[username]', :size => 20 }
+    %dt
+      Password:
+    %dd
+      %input{ :type => 'text', :name => 'login[password]', :size => 20 }
+    %dt
+      %input{ :type => 'submit' }
+

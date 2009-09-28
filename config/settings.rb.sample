@@ -1,5 +1,7 @@
 configure do
 
+  enable :sessions
+  
   # haml settings
   set :haml, { :format => :html5, :attr_wrapper => '"' }
   
@@ -19,8 +21,9 @@ BLOG_URL = 'http://localhost:4567'
 BLOG_DESCRIPTION = "Something used for heading and RSS description"
 ABOUT_TEXT = "This is some sample text, where you could put links or whatever.\n\nI run this through markdown."
 
-# manage signups
-ALLOW_NEW_ACCOUNTS = false
+# authentication
+LOGIN_USERNAME = 'login'
+LOGIN_PASSWORD = 'passwd'
 
 # comments by disqus
 ALLOW_COMMENTS = false
