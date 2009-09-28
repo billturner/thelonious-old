@@ -8,20 +8,21 @@
       =BLOG_TITLE
     %link{ :href => "/stylesheets/style.css", :media => "all", :rel => "stylesheet", :type => "text/css" }
   %body
-    #container
-      #header
+    .container
+      #header{ :class => 'span-24 last'}
         %h1
           %a{ :href => '/', :rel => 'bookmark home' }= BLOG_TITLE
-        .navigation
-          %ul
-            %li
-              %a{ :href => '/archives', :rel => 'bookmark' } Archives
-            %li
-              %a{ :href => '/rss' } RSS
-      #content
+      #content{ :class => 'span-20' }
         =yield
-      #boxes
-      #footer
+      #sidebar{ :class => 'span-4 last' }
+        .sidebarbox
+          %h4 Pages
+          -Page.all.each do |page|
+            %a{ :href => page_url(page) }= page.title
+        .sidebarbox
+          %h4 About
+          =markdown(ABOUT_TEXT)
+      #footer{ :class => 'span-24 last' }
         %p
           All content copyright &copy;
           ="#{Date.today.year},"

@@ -47,7 +47,7 @@ end
 # routing & actions
 get '/' do 
   @posts = Post.recently_published
-  @page_title = "Weblog Posts"
+  @page_title = BLOG_DESCRIPTION
   haml :index
 end
 
@@ -55,7 +55,7 @@ get "/:year/:month/:slug" do
   @post = Post.first(:slug => params[:slug])
   raise not_found unless @post
   @page_title = @post.title
-  haml :post, :locals => { :post => @post, :page_type => 'single' }
+  haml :post
 end
 
 get "/page/:slug" do
@@ -101,25 +101,25 @@ end
 ## POSTS
 # Add a new post
 get '/new_post' do
-  authenticate
+  #authenticate
   @page_title = "Add Post"
   @post = Post.new
   haml :new_post
 end
 post '/new_post' do
-  authenticate
+  #authenticate
   @post = Post.create(params[:post])
   redirect '/'
 end
 # Edit existing post
 get '/edit_post/:id' do
-  authenticate
+  #authenticate
   @page_title = "Edit Post"
   @post = Post.get(params[:id])
   haml :edit_post
 end
 post '/edit_post/:id' do
-  authenticate
+  #authenticate
   @post = Post.get(params[:id])
   @post.update(params[:post])
   redirect '/'
@@ -128,26 +128,26 @@ end
 ## PAGES
 # Add a new page
 get '/new_page' do
-  authenticate
+  #authenticate
   @page_title = "Add Page"
   @page = Page.new
   haml :new_page
 end
 post '/new_page' do
-  authenticate
+  #authenticate
   @page = Page.create(params[:page])
   redirect '/'
 end
 
 # Edit existing page
 get '/edit_page/:id' do
-  authenticate
+  #authenticate
   @page_title = "Edit Page"
   @page = Page.get(params[:id])
   haml :edit_page
 end
 post '/edit_page/:id' do
-  authenticate
+  #authenticate
   @page = Page.get(params[:id])
   @page.update(params[:page])
   redirect '/'

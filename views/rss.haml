@@ -12,7 +12,7 @@
         %title= escape_html(post.title)
         %link= permalink_url(post)
         %author= BLOG_AUTHOR
-        %guid{ :isPermaLink => 'false' }= "#{post.id}@#{BLOG_URL}/"
+        %guid= permalink_url(post)
         %pubDate= post.published_at.rfc822
         =find_and_preserve do
           %description<= cdata(markdown(post.body))
