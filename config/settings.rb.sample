@@ -1,5 +1,16 @@
-# haml settings
-set :haml, :format => :html5
+configure do
+
+  # haml settings
+  set :haml, { :format => :html5, :attr_wrapper => '"' }
+  
+  # compass settings
+  Compass.configuration do |config|
+    config.project_path = File.dirname(__FILE__)
+    config.sass_dir     = File.join(Sinatra::Application.views, 'stylesheets')
+    config.output_style = :compact
+  end
+
+end
 
 # site-wide variables
 BLOG_TITLE = 'My Weblog'

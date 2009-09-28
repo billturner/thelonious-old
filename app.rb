@@ -1,5 +1,5 @@
 # libs
-%w(rubygems sinatra dm-core dm-timestamps haml sass rdiscount).each do |lib|
+%w(rubygems compass sinatra dm-core dm-timestamps haml rdiscount).each do |lib|
   require lib
 end
 
@@ -16,13 +16,17 @@ helpers do
     "#{BLOG_URL}/#{post.created_at.strftime('%Y/%m')}/#{post.slug}"
   end
   
-  def markdown(text)
-    RDiscount.new(text).to_html
+  def tag_url(tag)
+    "#{BLOG_URL}/tag/#{tag.slug}"
   end
   
-  def tag_url(tag)
-    "#{BLOG_URL}/tag/#{tag.name}"
+  def page_url(page)
+    "#{BLOG_URL}/page/#{page.slug}"
   end
+  
+  def markdown(text)
+    RDiscount.new(text).to_html
+  end  
 
   def cdata(text)
     "<![CDATA[#{text}]]>"
@@ -51,7 +55,7 @@ get "/:year/:month/:slug" do
   @post = Post.first(:slug => params[:slug])
   raise not_found unless @post
   @page_title = @post.title
-  haml :post, :locals => { :post => @post, :type => 'single' }
+  haml :post, :locals => { :post => @post, :page_type => 'single' }
 end
 
 get "/page/:slug" do
@@ -69,40 +73,53 @@ get "/tag/:slug" do
 end
 
 get "/rss/?" do
-    @posts = Post.recently_published
-    content_type 'application/rss+xml', :charset => 'utf-8'
-    haml :rss, :layout => false
+  content_type 'application/rss+xml', :charset => 'utf-8'
+  @posts = Post.recently_published
+  haml :rss, :layout => false
 end
 
-# get "/rss/?" do
-#   @posts = Post.recently_published
-#   haml :feed, :layout => false
-# end
+get '/robots.txt' do
+  content_type 'text/plain', :charset => 'utf-8'
+  'User-agent: *
+Allow: /'
+end
+
+get '/sitemap.xml' do
+  content_type 'text/xml', :charset => 'utf-8'
+  @posts = Post.all
+  @tags = Tag.all
+  @pages = Page.all
+  haml :sitemap, :layout => false
+end
 
 # stylesheet
-get '/style.css' do
-  headers 'Content-Type' => 'text/css; charset=utf-8'
-  sass :style
+get '/stylesheets/style.css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :"stylesheets/style", :sass => Compass.sass_engine_options
 end
 
 ## POSTS
 # Add a new post
 get '/new_post' do
+  authenticate
   @page_title = "Add Post"
   @post = Post.new
   haml :new_post
 end
 post '/new_post' do
+  authenticate
   @post = Post.create(params[:post])
   redirect '/'
 end
 # Edit existing post
 get '/edit_post/:id' do
+  authenticate
   @page_title = "Edit Post"
   @post = Post.get(params[:id])
   haml :edit_post
 end
 post '/edit_post/:id' do
+  authenticate
   @post = Post.get(params[:id])
   @post.update(params[:post])
   redirect '/'
@@ -111,22 +128,26 @@ end
 ## PAGES
 # Add a new page
 get '/new_page' do
+  authenticate
   @page_title = "Add Page"
   @page = Page.new
   haml :new_page
 end
 post '/new_page' do
+  authenticate
   @page = Page.create(params[:page])
   redirect '/'
 end
 
 # Edit existing page
 get '/edit_page/:id' do
+  authenticate
   @page_title = "Edit Page"
   @page = Page.get(params[:id])
   haml :edit_page
 end
 post '/edit_page/:id' do
+  authenticate
   @page = Page.get(params[:id])
   @page.update(params[:page])
   redirect '/'

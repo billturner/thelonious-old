@@ -10,5 +10,5 @@
         %a{ :href => tag_url(tag), :rel => 'category tag', :title => "View other posts tagged with '#{tag.name}'" }= "##{tag.name}"
     &mdash;
     =post.published_at.strftime('%Y-%m-%d %I:%M%p')
-  - if type == 'single' && ALLOW_COMMENTS
+  - if @page_type && @page_type == 'single' && ALLOW_COMMENTS
     =haml :disqus_embed, :layout => false

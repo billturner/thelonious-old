@@ -1,0 +1,21 @@
+!!! xml
+%urlset{:xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9"}
+  %url
+    %loc= "#{BLOG_URL}/"
+    %priority 1.0
+    %changefreq daily
+  -@posts.each do |post|
+    %url
+      %loc= permalink_url(post)
+      %priority 0.6
+      %changefreq monthly
+  -@tags.each do |tag|
+    %url
+      %loc= tag_url(tag)
+      %priority 0.8
+      %changefreq weekly
+  -@pages.each do |page|
+    %url
+      %loc= page_url(page)
+      %priority 0.6
+      %changefreq monthly
