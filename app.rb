@@ -58,7 +58,6 @@ end
 
 # routing & actions
 get '/' do 
-  puts "ENVV: #{request.env}"
   @posts = Post.recently_published
   @page_title = BLOG_DESCRIPTION
   haml :index

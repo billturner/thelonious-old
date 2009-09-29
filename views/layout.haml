@@ -7,18 +7,28 @@
         |
       =BLOG_TITLE
     %link{ :href => "/stylesheets/style.css", :media => "all", :rel => "stylesheet", :type => "text/css" }
+    %link{ :href => "#{BLOG_URL}/rss", :rel => "alternate", :type => "application/rss+xml", :title => "#{BLOG_TITLE} RSS feed" }
+    %link{ :href => "#{BLOG_URL}/", :rel => 'home' }
+    %meta{ :name => 'robots', :content => 'index, follow' }
+    %meta{ :name => 'author', :content => "#{BLOG_AUTHOR}" }
   %body
     .container
       #header{ :class => 'span-24 last'}
         %h1
-          %a{ :href => '/', :rel => 'bookmark home' }= BLOG_TITLE
+          %a{ :href => '/', :rel => 'bookmark home', :title => "#{BLOG_TITLE} home page" }= BLOG_TITLE
       #content{ :class => 'span-20' }
         =yield
       #sidebar{ :class => 'span-4 last' }
         .sidebarbox
           %h4 Pages
-          -Page.all.each do |page|
-            %a{ :href => page_url(page) }= page.title
+          %ul
+            -Page.all.each do |page|
+              %li
+                %a{ :href => page_url(page), :rel => 'bookmark', :title => "#{page.title}" }= page.title
+            %li
+              %a{ :href => '/archive', :rel => 'bookmark', :title => "All archived posts at #{BLOG_TITLE}" } All Posts
+            %li
+              %a{ :href => '/rss', :title => "The RSS feed for new posts at #{BLOG_TITLE}" } RSS Feed
         .sidebarbox
           %h4 About
           =markdown(ABOUT_TEXT)
@@ -43,7 +53,7 @@
           ="#{Date.today.year},"
           =BLOG_AUTHOR + '.'
           Powered by 
-          %a{ :href => 'http://github.com/billturner/sinatrablog', :rel => 'bookmark', :title => "Use this code for yourself! It's available on github.com" } Sinatrablog
+          %a{ :href => 'http://github.com/billturner/sinatrablog', :rel => 'bookmark', :title => "Use this code for yourself! It's available on github.com" }> Sinatrablog
           \.
     - if USE_GOOGLE_ANALYTICS
       =haml :google_analytics, :layout => false
