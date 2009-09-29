@@ -1,4 +1,5 @@
-%h2= @page_title
+-if request.env['PATH_INFO'] != '/'
+  %h2= @page_title 
 %div#posts
   -@posts.each do |post|
     =haml :single_post, :layout => false, :locals => { :post => post }

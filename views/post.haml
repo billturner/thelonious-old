@@ -1,4 +1,9 @@
 =haml :single_post, :locals => { :post => post }, :layout => false
+-if logged_in?
+  Admin:
+  %a{ :href => "/edit_post/#{post.id}" } Edit This Post
 - if ALLOW_COMMENTS
   #comments
     =haml :disqus_embed, :layout => false
+
+    

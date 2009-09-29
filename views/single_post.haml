@@ -5,8 +5,9 @@
     =find_and_preserve do
       =markdown(post.body)
   %div.meta
+    =post.published_at.strftime('%Y-%m-%d %I:%M%p')
     -if post.tags.count > 0
+      &mdash;
       -post.tags.each do |tag|
         %a{ :href => tag_url(tag), :rel => 'category tag', :title => "View other posts tagged with '#{tag.name}'" }= "##{tag.name}"
-    &mdash;
-    =post.published_at.strftime('%Y-%m-%d %I:%M%p')
+    

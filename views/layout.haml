@@ -22,12 +22,28 @@
         .sidebarbox
           %h4 About
           =markdown(ABOUT_TEXT)
+        -if logged_in?
+          .sidebarbox
+            %h4 Admin
+            %ul
+              %li
+                %a{ :href => '/new_post' } New Post
+              %li
+                %a{ :href => '/all_posts' } All Posts
+              %li
+                %a{ :href => '/new_page' } New Page
+              %li
+                %a{ :href => '/all_pages' } All Pages
+              %li
+                %a{ :href => '/logout' } Logout
+                
       #footer{ :class => 'span-24 last' }
         %p
           All content copyright &copy;
           ="#{Date.today.year},"
           =BLOG_AUTHOR + '.'
           Powered by 
-          %a{ :href => 'http://github.com/billturner/sinatrablog', :title => "Use this code for yourself! It's available on github.com" } Sinatrablog
+          %a{ :href => 'http://github.com/billturner/sinatrablog', :rel => 'bookmark', :title => "Use this code for yourself! It's available on github.com" } Sinatrablog
+          \.
     - if USE_GOOGLE_ANALYTICS
       =haml :google_analytics, :layout => false

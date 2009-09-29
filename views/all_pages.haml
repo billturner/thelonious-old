@@ -1,0 +1,10 @@
+%h2= @page_title
+%ul
+  -Page.all.each do |page|
+    %li
+      %a{ :href => page_url(page) }= page.title
+      &mdash;
+      =page.created_at.strftime('%Y-%m-%d %I:%M%p')
+      (
+      %a{ :href => "/edit_page/#{page.id}" }> Edit
+      )

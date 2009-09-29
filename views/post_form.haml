@@ -16,7 +16,7 @@
   %dt
     Publish?
   %dd
-    %input{ :type => 'checkbox', :name => 'post[published]', :value => 1 } Yes
+    %input{ :type => 'checkbox', :name => 'post[published]', :value => 1, :checked => (@post.published? ? 'checked' : '' ) } Yes
 
   %dt
     %input{ :type => 'submit' }

@@ -28,6 +28,14 @@ class Post
         self.all(:published => true, :order => [:published_at.desc], :limit => 15)
       end
       
+      def all_published
+        self.all(:published => true, :order => [:published_at.desc])
+      end
+      
+      def all_drafts
+        self.all(:published => false, :order => [:created_at.desc])
+      end
+      
     end
     
     def generate_slug

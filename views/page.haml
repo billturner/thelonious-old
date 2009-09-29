@@ -2,3 +2,6 @@
   =@page.title
 %div.post
   =markdown(@page.body)
+-if logged_in?
+  Admin:
+  %a{ :href => "/edit_page/#{page.id}" } Edit This Page

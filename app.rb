@@ -66,6 +66,12 @@ get "/:year/:month/:slug" do
   haml :post, :locals => { :post => @post }
 end
 
+get '/archive' do
+  @page_title = 'Archive of All Posts'
+  @posts = Post.all_published
+  haml :archive
+end
+
 get "/page/:slug" do
   @page = Page.first(:slug => params[:slug])
   raise not_found unless @page
@@ -77,6 +83,8 @@ get "/tag/:slug" do
   @tag = Tag.first(:slug => params[:slug])
   raise not_found unless @tag
   @posts = @tag.posts(:published => true, :order => [:published_at.desc])
+  raise not_found unless @posts
+  @page_title = "All posts tagged with ##{@tag.name}"
   haml :index
 end
 
@@ -148,7 +156,12 @@ post '/edit_post/:id' do
   authenticate!
   @post = Post.get(params[:id])
   @post.update(params[:post])
-  redirect '/'
+  redirect '/all_posts'
+end
+get '/all_posts' do
+  authenticate!
+  @page_title = "All Posts"
+  haml :all_posts
 end
 
 ## PAGES
@@ -162,7 +175,12 @@ end
 post '/new_page' do
   authenticate!
   @page = Page.create(params[:page])
-  redirect '/'
+  redirect '/all_pages'
+end
+get '/all_pages' do
+  authenticate!
+  @page_title = "All Pages"
+  haml :all_pages
 end
 
 # Edit existing page
