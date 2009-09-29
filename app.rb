@@ -3,9 +3,6 @@
   require lib
 end
 
-# Set up db logging
-DataMapper::Logger.new(STDOUT, :debug)
-
 # config & db connection ( + models )
 ['config/settings.rb', 'config/database.rb'].each {|file| require file }
 
@@ -26,7 +23,14 @@ helpers do
   
   def markdown(text)
     RDiscount.new(text).to_html
-  end  
+  end
+  
+  def clear_caches!
+    cache_expire('/rss')
+    cache_expire('/sitemap.xml')
+    cache_expire('/archive')
+  end
+  
 
   def cdata(text)
     "<![CDATA[#{text}]]>"
@@ -54,6 +58,7 @@ end
 
 # routing & actions
 get '/' do 
+  puts "ENVV: #{request.env}"
   @posts = Post.recently_published
   @page_title = BLOG_DESCRIPTION
   haml :index
@@ -68,7 +73,6 @@ end
 
 get '/archive' do
   @page_title = 'Archive of All Posts'
-  @posts = Post.all_published
   haml :archive
 end
 
@@ -88,7 +92,7 @@ get "/tag/:slug" do
   haml :index
 end
 
-get "/rss/?" do
+get "/rss" do
   content_type 'application/rss+xml', :charset => 'utf-8'
   @posts = Post.recently_published
   haml :rss, :layout => false
@@ -143,6 +147,7 @@ end
 post '/new_post' do
   authenticate!
   @post = Post.create(params[:post])
+  #clear_caches!
   redirect '/'
 end
 # Edit existing post
@@ -156,6 +161,7 @@ post '/edit_post/:id' do
   authenticate!
   @post = Post.get(params[:id])
   @post.update(params[:post])
+  #clear_caches!
   redirect '/all_posts'
 end
 get '/all_posts' do
@@ -194,5 +200,5 @@ post '/edit_page/:id' do
   authenticate!
   @page = Page.get(params[:id])
   @page.update(params[:page])
-  redirect '/'
+  redirect '/all_pages'
 end
