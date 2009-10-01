@@ -7,7 +7,7 @@
     %description= escape_html(BLOG_DESCRIPTION)
     %lastBuildDate= @posts.first.published_at.rfc822
     %language en-us
-    -@posts.each do |post|
+    -@posts.recently_published.each do |post|
       %item
         %title= escape_html(post.title)
         %link= permalink_url(post)

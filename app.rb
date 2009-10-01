@@ -25,13 +25,6 @@ helpers do
     RDiscount.new(text).to_html
   end
   
-  def clear_caches!
-    cache_expire('/rss')
-    cache_expire('/sitemap.xml')
-    cache_expire('/archive')
-  end
-  
-
   def cdata(text)
     "<![CDATA[#{text}]]>"
   end
@@ -93,21 +86,11 @@ end
 
 get "/rss" do
   content_type 'application/rss+xml', :charset => 'utf-8'
-  @posts = Post.recently_published
   haml :rss, :layout => false
-end
-
-get '/robots.txt' do
-  content_type 'text/plain', :charset => 'utf-8'
-  'User-agent: *
-Allow: /'
 end
 
 get '/sitemap.xml' do
   content_type 'text/xml', :charset => 'utf-8'
-  @posts = Post.all
-  @tags = Tag.all
-  @pages = Page.all
   haml :sitemap, :layout => false
 end
 
@@ -146,7 +129,6 @@ end
 post '/new_post' do
   authenticate!
   @post = Post.create(params[:post])
-  #clear_caches!
   redirect '/'
 end
 # Edit existing post
@@ -160,7 +142,6 @@ post '/edit_post/:id' do
   authenticate!
   @post = Post.get(params[:id])
   @post.update(params[:post])
-  #clear_caches!
   redirect '/all_posts'
 end
 get '/all_posts' do

@@ -5,4 +5,4 @@ config/database.rb
 config/settings.rb
 tmp/*
 .sass-cache/*
-public/*
+public/cache/*

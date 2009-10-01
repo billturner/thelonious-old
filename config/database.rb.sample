@@ -3,7 +3,7 @@ configure :development do
   DataMapper.setup(:default, {
     :adapter  => 'mysql',
     :host     => 'localhost',
-    :username => 'user' ,
+    :username => 'user',
     :password => 'pass',
     :database => 'sinatrablog_development'
   })
@@ -15,7 +15,7 @@ configure :production do
   DataMapper.setup(:default, {
     :adapter  => 'mysql',
     :host     => 'localhost',
-    :username => 'user' ,
+    :username => 'user',
     :password => 'pass',
     :database => 'sinatrablog_production'
   })
@@ -27,7 +27,7 @@ configure :test do
   DataMapper.setup(:default, {
     :adapter  => 'mysql',
     :host     => 'localhost',
-    :username => 'user' ,
+    :username => 'user',
     :password => 'pass',
     :database => 'sinatrablog_test'
   })

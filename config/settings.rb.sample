@@ -4,13 +4,14 @@ configure do
   # require 'sinatra/cache'
   # set :cache_enabled, true
   # set :cache_page_extension, '.html'
-  # set :cache_output_dir, ''
+  # set :cache_output_dir, File.join(Sinatra::Application.public, 'cache')
+  # set :cache_logging, true
 
   # allow sessions
   enable :sessions
   
   # log datamapper queries
-  DataMapper::Logger.new(STDOUT, :debug)
+  DataMapper::Logger.new(STDOUT, :debug) if development?
   
   # haml settings
   set :haml, { :format => :html5, :attr_wrapper => '"' }
