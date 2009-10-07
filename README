@@ -9,6 +9,15 @@ I'm writing this one to get a better grasp on:
 
 We'll see how it goes.
 
+SETTING IT UP:
+
+1. Grab the code from Github
+2. Move/copy config/database.db.sample => config/database.rb 
+3. Fill in your DB credentials (host, user, pass, DB)
+4. Create the DB if it does not already exist
+5. Run "rake app:setup_files" to copy the base files live
+6. a few more steps here..
+
 TODO:
 
 * Caching (esp. RSS & sitemap)

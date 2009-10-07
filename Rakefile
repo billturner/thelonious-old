@@ -6,8 +6,6 @@ namespace :app do
   
   desc "Move .example files into place"
   task :setup_files do
-    puts  "Moving database file..."
-    run   "mv db/database.rb.sample db/database.rb"
     puts  "Moving settings file..."
     run   "mv db/settings.rb.sample db/settings.rb"
     puts  "Moving layout view file..."
