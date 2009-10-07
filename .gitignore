@@ -1,8 +1,10 @@
 .DS_Store
 .DS_store
 **/.DS_Store
-config/database.rb
-config/settings.rb
 tmp/*
 .sass-cache/*
 public/cache/*
+config/database.rb
+config/settings.rb
+views/layout.haml
+views/stylesheets/custom.sass

@@ -15,4 +15,3 @@ TODO:
 * constraints/validations on posts/pages - errors (flash?)
 * Fix the checkbox (published for Post)
 * write some tests
-* Have config/database.rb create the database itself if not available
