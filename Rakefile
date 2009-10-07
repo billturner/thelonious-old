@@ -6,12 +6,12 @@ namespace :app do
   
   desc "Move .example files into place"
   task :setup_files do
-    puts  "Moving settings file..."
-    run   "mv db/settings.rb.sample db/settings.rb"
-    puts  "Moving layout view file..."
-    run   "mv views/layout.example views/layout.haml"
-    puts  "Moving custom CSS file..."
-    run   "mv views/stylesheets/custom.example views/stylesheets/custom.sass"
+    puts    "Moving settings file..."
+    system  "mv config/settings.rb.sample config/settings.rb"
+    puts    "Moving layout view file..."
+    system  "mv views/layout.example views/layout.haml"
+    puts    "Moving custom CSS file..."
+    system  "mv views/stylesheets/custom.example views/stylesheets/custom.sass"
   end
   
 end
