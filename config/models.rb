@@ -49,7 +49,8 @@ class Post
     def assign_tags
       self.taglist.split(',').collect { |t| t.strip }.uniq.each do |tag|
         current_tag = Tag.first_or_create(:name => tag.downcase)
-        self.tags << current_tag
+        #self.tags << current_tag
+        Tagging.create :post_id => self.id, :tag_id => current_tag.id
       end
     end
   
