@@ -15,7 +15,7 @@ class Post
   has n,  :taggings
   has n,  :tags,    :through => :taggings
   
-  before  :save,    :determine_publish_status  
+  before  :save,    :determine_publish_status
   after   :create,  :generate_slug
   after   :create,  :assign_tags
   after   :update,  :update_tags

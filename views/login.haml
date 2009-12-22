@@ -2,13 +2,13 @@
 %form{ :method => 'POST', :action => "/login" }
   %dl
     %dt
-      Username:
+      =label_tag "login_username", :caption => "Username"
     %dd
-      %input{ :type => 'text', :name => 'login[username]', :size => 20 }
+      =text_field_tag :"login[username]", :id => 'login_username', :size => 20
     %dt
-      Password:
+      =label_tag "login_password", :caption => "Password"
     %dd
-      %input{ :type => 'password', :name => 'login[password]', :size => 20 }
+      =password_field_tag :"login[password]", :id => 'login_password', :size => 20
     %dt
-      %input{ :type => 'submit' }
+      =submit_tag "Log in"
 

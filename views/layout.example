@@ -6,7 +6,11 @@
         =@page_title
         |
       =BLOG_TITLE
-    %link{ :href => "/stylesheets/style.css", :media => "all", :rel => "stylesheet", :type => "text/css" }
+    =stylesheet_link_tag 'screen', :media => "screen, projection"
+    =stylesheet_link_tag 'print', :media => "print"
+    /[if lt IE 8]
+      =stylesheet_link_tag 'ie', :media => "screen, projection"
+    =stylesheet_link_tag 'custom', :media => "all"
     %link{ :href => "#{BLOG_URL}/rss", :rel => "alternate", :type => "application/rss+xml", :title => "#{BLOG_TITLE} RSS feed" }
     %link{ :href => "#{BLOG_URL}/", :rel => 'home' }
     %meta{ :name => 'keywords', :content => "#{BLOG_KEYWORDS}" }
