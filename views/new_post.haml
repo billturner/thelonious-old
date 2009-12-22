@@ -1,3 +1,3 @@
 %h2= @page_title
--form_for @post, '/new_post', :method => 'POST' do |f|
+-form_for @post, '/new_post', :method => 'POST', :class => "admin-form" do |f|
   =partial 'post_form', :object => @post, :locals => { :f => f }

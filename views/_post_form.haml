@@ -7,8 +7,7 @@
     =f.label :body, :caption => "Post Body"
   %dd
     =find_and_preserve do
-      %textarea{ :name => 'post[body]', :cols => 50, :rows => 20 } 
-        =@post.body
+      =f.text_area :body
   %dt
     =f.label :taglist, :caption => "Post Tags"
   %dd
