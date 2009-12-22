@@ -14,7 +14,7 @@ configure do
   DataMapper::Logger.new(STDOUT, :debug) if development?
   
   # haml settings
-  set :haml, { :format => :html5, :attr_wrapper => '"' }
+  set :haml, { :attr_wrapper => '"' }
   
   # compass settings
   Compass.configuration do |config|
@@ -30,6 +30,7 @@ BLOG_TITLE = 'My Weblog'
 BLOG_AUTHOR = 'Bart Simpson'
 BLOG_URL = 'http://localhost:4567'
 BLOG_DESCRIPTION = "Something used for heading and RSS description"
+BLOG_KEYWORDS = 'weblog, blog'
 ABOUT_TEXT = "This is some sample text, where you could put links or whatever.\n\nI run this through markdown."
 
 # authentication

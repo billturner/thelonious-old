@@ -7,4 +7,5 @@ public/cache/*
 config/database.rb
 config/settings.rb
 views/layout.haml
-views/stylesheets/custom.sass
+public/stylesheets/*.css
+public/stylesheets/sass/custom.sass

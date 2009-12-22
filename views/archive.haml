@@ -1,13 +1,18 @@
 %h2= @page_title
+%h3 Tags Used for Posts
+%ul.archive-tags
+  -Tag.all(:order => [ :name.asc ]).each do |tag|
+    %li
+      %a{ :href => tag_url(tag), :rel => 'category tag', :title => "View all posts tagged with '#{tag.name}'" }= "##{tag.name}"
+%h3 Chronological Archive (newest first)
 %ul
   -Post.all_published.each do |post|
     %li
       %p
-        %a{ :href => permalink_url(post) }= post.title
+        %a{ :href => permalink_url(post), :rel => 'bookmark', :title => "View this post"  }= post.title
         %br
         =post.published_at.strftime('%Y-%m-%d %I:%M%p')
         -if post.tags.count > 0
           &mdash;
           -post.tags.each do |tag|
             %a{ :href => tag_url(tag), :rel => 'category tag', :title => "View other posts tagged with '#{tag.name}'" }= "##{tag.name}"
-        

@@ -12,6 +12,7 @@ namespace :app do
     system  "mv views/layout.example views/layout.haml"
     puts    "Moving custom CSS file..."
     system  "mv views/stylesheets/custom.example views/stylesheets/custom.sass"
+    puts    "Done."
   end
   
 end

@@ -1,5 +1,5 @@
 # libs
-%w(rubygems compass sinatra dm-core dm-timestamps haml rdiscount).each do |lib|
+%w(rubygems sinatra dm-core dm-timestamps dm-pager haml rdiscount sinatra_more/markup_plugin).each do |lib|
   require lib
 end
 
@@ -64,7 +64,7 @@ get "/:year/:month/:slug" do
 end
 
 get '/archive' do
-  @page_title = 'Archive of All Posts'
+  @page_title = 'Archived Posts'
   haml :archive
 end
 
@@ -93,13 +93,7 @@ get '/sitemap.xml' do
   content_type 'text/xml', :charset => 'utf-8'
   haml :sitemap, :layout => false
 end
-
-# stylesheet
-get '/stylesheets/style.css' do
-  content_type 'text/css', :charset => 'utf-8'
-  sass :"stylesheets/style", :sass => Compass.sass_engine_options
-end
-
+  
 ## AUTHENTICATION STUFF
 get '/login' do
   @page_title = 'Please log in'

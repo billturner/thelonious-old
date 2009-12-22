@@ -1,4 +1,4 @@
-!!!
+!!! 5
 %html
   %head
     %title
@@ -9,6 +9,10 @@
     %link{ :href => "/stylesheets/style.css", :media => "all", :rel => "stylesheet", :type => "text/css" }
     %link{ :href => "#{BLOG_URL}/rss", :rel => "alternate", :type => "application/rss+xml", :title => "#{BLOG_TITLE} RSS feed" }
     %link{ :href => "#{BLOG_URL}/", :rel => 'home' }
+    %meta{ :name => 'keywords', :content => "#{BLOG_KEYWORDS}" }
+    %meta{ :name => 'author', :content => "#{BLOG_AUTHOR}" }
+    %meta{ :name => 'description', :content => "#{BLOG_DESCRIPTION}" }
+    %meta{ :"http-equiv" => "Content-Type", :content => "text/html; charset=UTF-8" }
     %meta{ :name => 'robots', :content => 'index, follow' }
     %meta{ :name => 'author', :content => "#{BLOG_AUTHOR}" }
   %body
