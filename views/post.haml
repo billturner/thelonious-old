@@ -1,4 +1,4 @@
-=partial 'single_post', :object => post
+=haml :single_post, :locals => { :post => post }, :layout => false
 -if logged_in?
   .admin
     Admin:

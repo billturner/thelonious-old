@@ -25,7 +25,12 @@ class SinatraBlog < Sinatra::Application
 
   # a few helpers
   helpers do
-    
+
+    def meta_tag(content, options={})
+      options.reverse_merge!("content" => content)
+      tag(:meta, options)
+    end
+
     def permalink_url(post)
       "#{BLOG_URL}/#{post.created_at.strftime('%Y/%m')}/#{post.slug}"
     end
@@ -96,7 +101,10 @@ class SinatraBlog < Sinatra::Application
   get "/tag/:slug" do
     @tag = Tag.first(:slug => params[:slug])
     raise not_found unless @tag
-    @posts = @tag.posts(:published => true, :order => [:published_at.desc])
+    page_number = params[:page] || 1
+    #@posts = @tag.posts(:published => true, :order => [:published_at.desc])
+    @posts = @tag.posts(:published => true, :order => [:published_at.desc]).page(page_number, :per_page => POSTS_PER_PAGE)
+    #@posts = all_posts.page(page_number, :per_page => POSTS_PER_PAGE, :published => true, :order => [:published_at.desc])
     raise not_found unless @posts
     @page_title = "All posts tagged with ##{@tag.name}"
     haml :index
