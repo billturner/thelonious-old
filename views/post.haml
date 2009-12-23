@@ -2,7 +2,7 @@
 -if logged_in?
   .admin
     Admin:
-    %a{ :href => "/edit_post/#{post.id}" } Edit This Post
+    =link_to "Edit this Post", "/edit_post/#{post.id}"
 - if ALLOW_COMMENTS
   #comments
     =haml :disqus_embed, :layout => false

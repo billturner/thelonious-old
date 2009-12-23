@@ -1,27 +1,3 @@
-configure do
-
-  # caching setup
-  # require 'sinatra/cache'
-  # set :cache_enabled, true
-  # set :cache_page_extension, '.html'
-  # set :cache_output_dir, File.join(Sinatra::Application.public, 'cache')
-  # set :cache_logging, true
-
-  # allow sessions
-  enable :sessions
-  
-  # log datamapper queries
-  DataMapper::Logger.new(STDOUT, :debug) if development?
-  
-  # haml settings
-  set :haml, { :attr_wrapper => '"' }
-  
-  # Sass via Rack settings
-  Sass::Plugin.options[:css_location] = File.join(Sinatra::Application.public, 'stylesheets')
-  Sass::Plugin.options[:template_location] = File.join(Sinatra::Application.public, 'stylesheets', 'sass')
-  
-end
-
 # site-wide variables
 BLOG_TITLE = 'My Weblog'
 BLOG_AUTHOR = 'Bart Simpson'
@@ -29,6 +5,9 @@ BLOG_URL = 'http://localhost:4567'
 BLOG_DESCRIPTION = "Something used for heading and RSS description"
 BLOG_KEYWORDS = 'weblog, blog'
 ABOUT_TEXT = "This is some sample text, where you could put links or whatever.\n\nI run this through markdown."
+
+# various settings
+POSTS_PER_PAGE = 10
 
 # authentication
 LOGIN_USERNAME = 'login'

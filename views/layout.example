@@ -6,20 +6,23 @@
         =@page_title
         |
       =BLOG_TITLE
-    %link{ :href => "/stylesheets/style.css", :media => "all", :rel => "stylesheet", :type => "text/css" }
+    =stylesheet_link_tag 'screen', :media => "screen, projection"
+    =stylesheet_link_tag 'print', :media => "print"
+    /[if lt IE 8]
+      =stylesheet_link_tag 'ie', :media => "screen, projection"
+    =stylesheet_link_tag 'custom', :media => "all"
     %link{ :href => "#{BLOG_URL}/rss", :rel => "alternate", :type => "application/rss+xml", :title => "#{BLOG_TITLE} RSS feed" }
     %link{ :href => "#{BLOG_URL}/", :rel => 'home' }
-    %meta{ :name => 'keywords', :content => "#{BLOG_KEYWORDS}" }
-    %meta{ :name => 'author', :content => "#{BLOG_AUTHOR}" }
-    %meta{ :name => 'description', :content => "#{BLOG_DESCRIPTION}" }
-    %meta{ :"http-equiv" => "Content-Type", :content => "text/html; charset=UTF-8" }
-    %meta{ :name => 'robots', :content => 'index, follow' }
-    %meta{ :name => 'author', :content => "#{BLOG_AUTHOR}" }
+    =meta_tag "text/html; charset=UTF-8", :"http-equiv" => "Content-Type"
+    =meta_tag "index, follow", :name => "robots"
+    =meta_tag "#{BLOG_DESCRIPTION}", :name => "description"
+    =meta_tag "#{BLOG_KEYWORDS}", :name => "keywords"
+    =meta_tag "#{BLOG_AUTHOR}", :name => "author"
   %body
     .container
       #header{ :class => 'span-24 last'}
         %h1
-          %a{ :href => '/', :rel => 'bookmark home', :title => "#{BLOG_TITLE} home page" }= BLOG_TITLE
+          =link_to BLOG_TITLE, "/", { :rel => "bookmark home", :title => "#{BLOG_TITLE} home page" }
       #content{ :class => 'span-20' }
         =yield
       #sidebar{ :class => 'span-4 last' }
@@ -28,11 +31,11 @@
           %ul
             -Page.all.each do |page|
               %li
-                %a{ :href => page_url(page), :rel => 'bookmark', :title => "#{page.title}" }= page.title
+                =link_to page.title, page_url(page), { :rel => "bookmark", :title => "#{page.title}" }
             %li
-              %a{ :href => '/archive', :rel => 'bookmark', :title => "All archived posts at #{BLOG_TITLE}" } All Posts
+              =link_to "All Posts", "/archive", { :rel => "bookmark", :title => "All archived posts at #{BLOG_TITLE}" }
             %li
-              %a{ :href => '/rss', :title => "The RSS feed for new posts at #{BLOG_TITLE}" } RSS Feed
+              =link_to "RSS", "/rss", { :title => "The RSS feed for new posts at #{BLOG_TITLE}" }
         .sidebarbox
           %h4 About
           =markdown(ABOUT_TEXT)
@@ -41,23 +44,23 @@
             %h4 Admin
             %ul
               %li
-                %a{ :href => '/new_post' } New Post
+                =link_to "New Post", "/new_post", { :title => "Write a new weblog post" }
               %li
-                %a{ :href => '/all_posts' } All Posts
+                =link_to "All Posts", "/all_posts", { :title => "View all current weblog posts" }
               %li
-                %a{ :href => '/new_page' } New Page
+                =link_to "New Page", "/new_page", { :title => "Write a new page" }
               %li
-                %a{ :href => '/all_pages' } All Pages
+                =link_to "All Pages", "/all_pages", { :title => "View all current pages" }
               %li
-                %a{ :href => '/logout' } Logout
+                =link_to "Log out", "/logout", { :title => "Log out of your admin session" }
                 
       #footer{ :class => 'span-24 last' }
         %p
           All content copyright &copy;
           ="#{Date.today.year},"
           =BLOG_AUTHOR + '.'
-          Powered by 
-          %a{ :href => 'http://github.com/billturner/sinatrablog', :rel => 'bookmark', :title => "Use this code for yourself! It's available on github.com" }> Sinatrablog
-          \.
+          =succeed "." do
+            Powered by 
+            =link_to "sinatrablog", 'http://github.com/billturner/sinatrablog', { :title => "A simple weblog application written by Bill Turner using Sinatra." }
     - if USE_GOOGLE_ANALYTICS
       =haml :google_analytics, :layout => false

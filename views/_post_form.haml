@@ -1,0 +1,21 @@
+%dl
+  %dt
+    =f.label :title, :caption => "Post Title"
+  %dd
+    =f.text_field :title, :value => @post.title, :size => 50
+  %dt
+    =f.label :body, :caption => "Post Body"
+  %dd
+    =find_and_preserve do
+      =f.text_area :body
+  %dt
+    =f.label :taglist, :caption => "Post Tags"
+  %dd
+    =f.text_field :taglist, :value => @post.tags.map{ |tag| tag.name }.join(", "), :size => 50
+  %dt
+    =f.label :published, :caption => "Publish?"
+  %dd
+    =f.check_box :published
+    Yes
+  %dt
+    =f.submit "Submit"

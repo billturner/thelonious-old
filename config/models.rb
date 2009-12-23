@@ -15,8 +15,8 @@ class Post
   has n,  :taggings
   has n,  :tags,    :through => :taggings
   
-  before  :save,    :determine_publish_status  
-  after   :create,  :generate_slug
+  before  :save,    :determine_publish_status
+  before  :save,    :generate_slug
   after   :create,  :assign_tags
   after   :update,  :update_tags
   
@@ -39,7 +39,7 @@ class Post
     end
     
     def generate_slug
-      self.update(:slug => "#{title.gsub(/[^a-z0-9]+/i, '-').gsub(/-$/, '').downcase}")
+      self.slug = "#{self.title.gsub(/[^a-z0-9]+/i, '-').gsub(/-$/, '').downcase}" if !self.title.blank? && self.slug.blank?
     end
     
     def determine_publish_status
@@ -49,7 +49,8 @@ class Post
     def assign_tags
       self.taglist.split(',').collect { |t| t.strip }.uniq.each do |tag|
         current_tag = Tag.first_or_create(:name => tag.downcase)
-        self.tags << current_tag
+        #self.tags << current_tag
+        Tagging.create :post_id => self.id, :tag_id => current_tag.id
       end
     end
   
@@ -85,7 +86,7 @@ class Tag
   has n, :taggings
   has n, :posts, :through => :taggings
     
-  after :create, :generate_slug
+  before :save, :generate_slug
 
   private
     
@@ -98,7 +99,7 @@ class Tag
     end
     
     def generate_slug
-      self.update(:slug => "#{name.gsub(/[^a-z0-9]+/i, '-').gsub(/-$/, '').downcase}")
+      self.slug = "#{self.name.gsub(/[^a-z0-9]+/i, '-').gsub(/-$/, '').downcase}" if !self.name.blank? && self.slug.blank?
     end
     
 end
@@ -113,12 +114,12 @@ class Page
   property :created_at, DateTime
   property :updated_at, DateTime
 
-  after :create, :generate_slug
+  before :save, :generate_slug
   
   private
     
     def generate_slug
-      self.update(:slug => "#{title.gsub(/[^a-z0-9]+/i, '-').gsub(/-$/, '').downcase}")
+      self.slug = "#{self.title.gsub(/[^a-z0-9]+/i, '-').gsub(/-$/, '').downcase}" if !self.title.blank? && self.slug.blank?
     end
 
 end
