@@ -2,9 +2,8 @@
 %ul
   -Page.all.each do |page|
     %li
-      %a{ :href => page_url(page) }= page.title
+      =link_to page.title, page_url(page)
       &mdash;
       =page.created_at.strftime('%Y-%m-%d %I:%M%p')
-      (
-      %a{ :href => "/edit_page/#{page.id}" }> Edit
-      )
+      \:
+      =link_to("Edit &raquo;", "/edit_page/#{page.id}")

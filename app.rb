@@ -67,8 +67,9 @@ class SinatraBlog < Sinatra::Application
   end
 
   # routing & actions
-  get '/' do 
-    @posts = Post.recently_published
+  get '/' do
+    page_number = params[:page] || 1
+    @posts = Post.page(page_number, :per_page => POSTS_PER_PAGE, :published => true, :order => [:published_at.desc])
     @page_title = BLOG_DESCRIPTION
     haml :index
   end

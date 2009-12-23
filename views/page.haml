@@ -5,4 +5,4 @@
 -if logged_in?
   .admin
     Admin:
-    %a{ :href => "/edit_page/#{@page.id}" } Edit This Page
+    =link_to "Edit this Page", "/edit_page/#{@page.id}"
