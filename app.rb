@@ -97,9 +97,7 @@ class SinatraBlog < Sinatra::Application
     @tag = Tag.first(:slug => params[:slug])
     raise not_found unless @tag
     page_number = params[:page] || 1
-    #@posts = @tag.posts(:published => true, :order => [:published_at.desc])
     @posts = @tag.posts(:published => true, :order => [:published_at.desc]).page(page_number, :per_page => POSTS_PER_PAGE)
-    #@posts = all_posts.page(page_number, :per_page => POSTS_PER_PAGE, :published => true, :order => [:published_at.desc])
     raise not_found unless @posts
     @page_title = "All posts tagged with ##{@tag.name}"
     haml :index
