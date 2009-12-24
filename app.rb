@@ -26,11 +26,6 @@ class SinatraBlog < Sinatra::Application
   # a few helpers
   helpers do
 
-    def meta_tag(content, options={})
-      options.reverse_merge!("content" => content)
-      tag(:meta, options)
-    end
-
     def permalink_url(post)
       "#{BLOG_URL}/#{post.created_at.strftime('%Y/%m')}/#{post.slug}"
     end
