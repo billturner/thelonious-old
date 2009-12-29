@@ -4,9 +4,9 @@ class Post
   
   include DataMapper::Resource
   property :id,           Serial
-  property :title,        String,   :length => 255
+  property :title,        String,   :length => 255,     :required => true
   property :slug,         String,   :length => 255
-  property :body,         Text
+  property :body,         Text,                         :required => true
   property :published,    Boolean,  :default => false
   property :published_at, DateTime
   property :created_at,   DateTime

@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'dm-core'
 require 'sinatra' unless defined?(Sinatra)
+require 'spec/rake/spectask'
 
 namespace :app do
   
@@ -36,3 +37,11 @@ namespace :db do
   end
   
 end
+
+Spec::Rake::SpecTask.new(:spec) do |spec|
+  spec.pattern = "spec/**/*_spec.rb"
+  spec.spec_opts = ["--options", "spec/spec.opts"]
+  #spec.rcov = true
+end
+
+task :default => :spec

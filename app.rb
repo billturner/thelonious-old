@@ -1,3 +1,19 @@
+require 'rubygems'
+require 'sinatra'
+require 'sinatra_more/markup_plugin'
+require 'sinatra_more/render_plugin'
+require 'dm-core'
+require 'dm-timestamps'
+require 'dm-aggregates'
+require 'dm-validations'
+require 'dm-pager'
+require 'haml'
+require 'rdiscount'
+
+# Use sass's Rack integration
+require 'sass/plugin/rack'
+use Sass::Plugin::Rack
+
 class SinatraBlog < Sinatra::Application
 
   # views & public

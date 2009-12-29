@@ -4,6 +4,7 @@
 tmp/*
 .sass-cache/*
 public/cache/*
+coverage/*
 config/database.rb
 config/settings.rb
 views/layout.haml
