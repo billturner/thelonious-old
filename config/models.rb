@@ -1,16 +1,21 @@
+require 'dm-validations'
+
 class Post
   
   attr_accessor :taglist
   
   include DataMapper::Resource
   property :id,           Serial
-  property :title,        String,   :length => 255,     :required => true
+  property :title,        String,   :length => 255
   property :slug,         String,   :length => 255
-  property :body,         Text,                         :required => true
+  property :body,         Text
   property :published,    Boolean,  :default => false
   property :published_at, DateTime
   property :created_at,   DateTime
   property :updated_at,   DateTime
+  
+  validates_present :title
+  validates_present :body
   
   has n,  :taggings
   has n,  :tags,    :through => :taggings
@@ -47,17 +52,19 @@ class Post
     end
     
     def assign_tags
-      self.taglist.split(',').collect { |t| t.strip }.uniq.each do |tag|
-        current_tag = Tag.first_or_create(:name => tag.downcase)
-        #self.tags << current_tag
-        Tagging.create :post_id => self.id, :tag_id => current_tag.id
+      unless self.taglist.blank?
+        self.taglist.split(',').collect { |t| t.strip }.uniq.each do |tag|
+          current_tag = Tag.first_or_create(:name => tag.downcase)
+          #self.tags << current_tag
+          Tagging.create :post_id => self.id, :tag_id => current_tag.id
+        end
       end
     end
   
     def update_tags
       self.taggings.each { |tagging| tagging.destroy }
       self.taggings.reload
-      assign_tags
+      assign_tags unless self.taglist.blank?
     end
     
 end
@@ -82,6 +89,9 @@ class Tag
   property :slug,       String,   :length => 50
   property :created_at, DateTime
   property :updated_at, DateTime
+  
+  validates_present   :name
+  validates_is_unique :name
   
   has n, :taggings
   has n, :posts, :through => :taggings
@@ -114,10 +124,13 @@ class Page
   property :created_at, DateTime
   property :updated_at, DateTime
 
+  validates_present :title
+  validates_present :body
+
   before :save, :generate_slug
-  
+
   private
-    
+
     def generate_slug
       self.slug = "#{self.title.gsub(/[^a-z0-9]+/i, '-').gsub(/-$/, '').downcase}" if !self.title.blank? && self.slug.blank?
     end

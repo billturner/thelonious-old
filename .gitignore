@@ -10,3 +10,4 @@ config/settings.rb
 views/layout.haml
 public/stylesheets/*.css
 public/stylesheets/sass/custom.sass
+spec/test.sqlite3

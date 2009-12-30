@@ -3,6 +3,7 @@ require 'sinatra'
 require 'spec'
 require 'spec/interop/test'
 require 'rack/test'
+require 'factory_girl'
  
 # set test environment
 Sinatra::Base.set :environment, :test
@@ -14,7 +15,8 @@ require File.join(File.dirname(__FILE__), '..', 'app.rb')
  
 # establish in-memory database for testing
 DataMapper.setup(:default, "sqlite3::memory:")
- 
+# DataMapper::Logger.new(STDOUT, :debug) # uncomment to see all the Datamapper logs
+
 Spec::Runner.configure do |config|
   # reset database before each example is run
   config.before(:each) { DataMapper.auto_migrate! }

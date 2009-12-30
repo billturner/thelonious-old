@@ -5,7 +5,6 @@ require 'sinatra_more/render_plugin'
 require 'dm-core'
 require 'dm-timestamps'
 require 'dm-aggregates'
-require 'dm-validations'
 require 'dm-pager'
 require 'haml'
 require 'rdiscount'
@@ -155,6 +154,7 @@ class SinatraBlog < Sinatra::Application
     @post = Post.new
     haml :new_post
   end
+  # TODO: 1) Fix redirect; 2) force back to edit if errors
   post '/new_post' do
     authenticate!
     @post = Post.create(params[:post])
@@ -187,6 +187,7 @@ class SinatraBlog < Sinatra::Application
     @page = Page.new
     haml :new_page
   end
+  # TODO: 1) Fix redirect; 2) force back to edit if errors
   post '/new_page' do
     authenticate!
     @page = Page.create(params[:page])
