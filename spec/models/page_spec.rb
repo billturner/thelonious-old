@@ -44,6 +44,10 @@ describe 'Model - Page' do
     page.slug.should == 'this-is-a-test'
   end
 
+  it "should not allow the same title/slug" do
+    pending
+  end
+
   after(:each) do
     Page.all.destroy!
   end

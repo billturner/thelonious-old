@@ -13,11 +13,17 @@ GEMS & VERSIONS NEEDED:
 
 * sinatra >= 0.9.4
 * sinatra_more >= 0.3.29
-* datamapper >= 0.10.2 (at _least_ dm-core, dm-timestamps & dm-aggregates)
+* datamapper >= 0.10.2 (at _least_ dm-core, dm-timestamps, dm-validations, and dm-aggregates)
 * dm-pager >= 1.0.1
 * do_mysql >= 0.10.0
 * haml >= 2.2.16
 * rdiscount >= 1.3.5
+
+For testing, you'll also need:
+
+* rack-test >= 0.5.3
+* rspec >= 1.2.9
+* factory_girl >= 1.2.3
 
 SETTING IT UP:
 
@@ -32,5 +38,3 @@ SETTING IT UP:
 TODO:
 
 * Caching (esp. RSS & sitemap)
-* constraints/validations on posts/pages - errors (flash?)
-* write some tests

@@ -44,6 +44,34 @@ describe 'Model - Post' do
     post.slug.should == 'this-is-a-test'
   end
 
+  it "should not allow the same title/slug" do
+    pending
+  end
+
+  it "should allow tags" do
+    pending
+  end
+
+  it "should not allow the same tag twice" do
+    pending
+  end
+
+  it "should update the tags if they change after update" do
+    pending
+  end
+
+  it "should delete all tags if they were erased on an update" do
+    pending
+  end
+
+  it "should fill in the published_at date when published? is true" do
+    pending
+  end
+
+  it "should remove the published_at date if currently published, but no longer published?" do
+    pending
+  end
+
   after(:each) do
     Post.all.destroy!
   end

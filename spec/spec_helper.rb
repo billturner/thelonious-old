@@ -10,8 +10,9 @@ Sinatra::Base.set :environment, :test
 Sinatra::Base.set :run, false
 Sinatra::Base.set :raise_errors, true
 Sinatra::Base.set :logging, false
- 
-require File.join(File.dirname(__FILE__), '..', 'app.rb')
+
+# bring in the app file
+require File.join(File.dirname(__FILE__), '..', 'app')
  
 # establish in-memory database for testing
 DataMapper.setup(:default, "sqlite3::memory:")
