@@ -23,8 +23,7 @@ class Post
   
   before  :save,    :update_published_status
   before  :save,    :generate_slug
-  after   :create,  :assign_tags
-  after   :update,  :update_tags
+  after   :save,    :do_tags
   
   private
     
@@ -53,22 +52,20 @@ class Post
       self.published_at = nil if !published? && !published_at.blank?
     end
     
-    def assign_tags
-      unless self.taglist.blank?
+    def do_tags
+      if self.taggings.length > 0
+        self.taggings.each { |t| t.destroy } 
+        self.taggings.reload
+      end
+      unless taglist.blank?
         self.taglist.split(',').collect { |t| t.strip }.uniq.each do |tag|
           current_tag = Tag.first_or_create(:name => tag.downcase)
-          #self.tags << current_tag
-          Tagging.create(:post_id => self.id, :tag_id => current_tag.id)
+          this_tagging = Tagging.create!(:post_id => self.id, :tag_id => current_tag.id)
         end
+        self.taglist = nil
       end
     end
-  
-    def update_tags
-      self.taggings.each { |tagging| tagging.destroy }
-      self.taggings.reload
-      assign_tags unless self.taglist.blank?
-    end
-    
+
 end
 
 class Tagging
