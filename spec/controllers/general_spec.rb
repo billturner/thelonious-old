@@ -1,6 +1,7 @@
-require File.join(File.dirname(__FILE__), 'spec_helper')
+require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
-describe "SinatraBlog" do
+describe "General App Tests" do
+
   include Rack::Test::Methods
 
   def app

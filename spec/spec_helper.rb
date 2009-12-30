@@ -18,6 +18,11 @@ require File.join(File.dirname(__FILE__), '..', 'app')
 DataMapper.setup(:default, "sqlite3::memory:")
 # DataMapper::Logger.new(STDOUT, :debug) # uncomment to see all the Datamapper logs
 
+def app
+  #@app ||= SinatraBlog
+  Sinatra::Application
+end
+
 Spec::Runner.configure do |config|
   # reset database before each example is run
   config.before(:each) { DataMapper.auto_migrate! }
