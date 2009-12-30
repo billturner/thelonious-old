@@ -55,17 +55,16 @@ class Post
     
     def assign_tags
       unless self.taglist.blank?
-        tag_ids = []
         self.taglist.split(',').collect { |t| t.strip }.uniq.each do |tag|
           current_tag = Tag.first_or_create(:name => tag.downcase)
-          Tagging.create(:post_id => self.id, :tag_id => current_tag.id) if !tag_ids.include?(current_tag.id)
-          tag_ids << current_tag.id if !tag_ids.include?(current_tag.id)
+          #self.tags << current_tag
+          Tagging.create(:post_id => self.id, :tag_id => current_tag.id)
         end
       end
     end
   
     def update_tags
-      self.tags.each { |tag| tag.destroy! }
+      self.taggings.each { |tagging| tagging.destroy }
       self.taggings.reload
       assign_tags unless self.taglist.blank?
     end

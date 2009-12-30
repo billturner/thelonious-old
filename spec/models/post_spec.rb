@@ -71,11 +71,8 @@ describe 'Model - Post' do
     tag_names.should include('web')
   end 
 
-  it "should not allow the same tag twice" do
-    pending("not sure how to do this without a unique on has n :through associations")
-  end
-
   it "should update the tags if they change after update (with taglist attribute)" do
+    #pending
     post = Post.create(Factory.attributes_for(:post))
     post.tags.length.should == 2
     tag_names = post.tags.collect{ |t| t.name }
@@ -116,6 +113,10 @@ describe 'Model - Post' do
     post.update(:published => false)
     post.published.should be_false
     post.published_at.should be_nil
+  end
+
+  it "should not allow the same tag twice" do
+    pending("not sure how to do this without a unique on has n :through associations")
   end
 
   after(:each) do
