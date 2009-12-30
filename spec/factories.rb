@@ -2,6 +2,7 @@ Factory.define :post do |p|
   p.title 'Test Post'
   p.body  'This is some test content!'
   p.published true
+  p.taglist 'web, code'
 end
 
 Factory.define :tag do |t|

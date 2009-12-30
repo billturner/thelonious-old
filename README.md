@@ -13,7 +13,7 @@ GEMS & VERSIONS NEEDED:
 
 * sinatra >= 0.9.4
 * sinatra_more >= 0.3.29
-* datamapper >= 0.10.2 (at _least_ dm-core, dm-timestamps, dm-validations, and dm-aggregates)
+* datamapper >= 0.10.2 (dm-core, dm-timestamps, dm-validations, and dm-aggregates)
 * dm-pager >= 1.0.1
 * do_mysql >= 0.10.0
 * haml >= 2.2.16
@@ -21,6 +21,7 @@ GEMS & VERSIONS NEEDED:
 
 For testing, you'll also need:
 
+* do_sqlite3 >= 0.10.0
 * rack-test >= 0.5.3
 * rspec >= 1.2.9
 * factory_girl >= 1.2.3

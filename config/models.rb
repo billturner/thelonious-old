@@ -14,13 +14,14 @@ class Post
   property :created_at,   DateTime
   property :updated_at,   DateTime
   
-  validates_present :title
-  validates_present :body
+  validates_present   :title
+  validates_is_unique :title
+  validates_present   :body
   
   has n,  :taggings
   has n,  :tags,    :through => :taggings
   
-  before  :save,    :determine_publish_status
+  before  :save,    :update_published_status
   before  :save,    :generate_slug
   after   :create,  :assign_tags
   after   :update,  :update_tags
@@ -47,22 +48,24 @@ class Post
       self.slug = "#{self.title.gsub(/[^a-z0-9]+/i, '-').gsub(/-$/, '').downcase}" if !self.title.blank? && self.slug.blank?
     end
     
-    def determine_publish_status
+    def update_published_status
       self.published_at = Time.now if published? && published_at.blank?
+      self.published_at = nil if !published? && !published_at.blank?
     end
     
     def assign_tags
       unless self.taglist.blank?
+        tag_ids = []
         self.taglist.split(',').collect { |t| t.strip }.uniq.each do |tag|
           current_tag = Tag.first_or_create(:name => tag.downcase)
-          #self.tags << current_tag
-          Tagging.create :post_id => self.id, :tag_id => current_tag.id
+          Tagging.create(:post_id => self.id, :tag_id => current_tag.id) if !tag_ids.include?(current_tag.id)
+          tag_ids << current_tag.id if !tag_ids.include?(current_tag.id)
         end
       end
     end
   
     def update_tags
-      self.taggings.each { |tagging| tagging.destroy }
+      self.tags.each { |tag| tag.destroy! }
       self.taggings.reload
       assign_tags unless self.taglist.blank?
     end
@@ -124,8 +127,9 @@ class Page
   property :created_at, DateTime
   property :updated_at, DateTime
 
-  validates_present :title
-  validates_present :body
+  validates_present   :title
+  validates_is_unique :title
+  validates_present   :body
 
   before :save, :generate_slug
 

@@ -45,31 +45,77 @@ describe 'Model - Post' do
   end
 
   it "should not allow the same title/slug" do
-    pending
+    post1 = Post.create(Factory.attributes_for(:post))
+    post2 = Post.create(Factory.attributes_for(:post))
+    post2.should_not be_valid
+    post2.errors[:title].should include("Title is already taken")
   end
 
   it "should allow tags" do
-    pending
-  end
+    post = Factory.build(:post, :taglist => nil)
+    tag1 = Factory.build(:tag, :name => 'code')
+    tag2 = Factory.build(:tag, :name => 'web')
+    post.tags << tag1
+    post.tags << tag2
+    post.tags.length.should == 2
+    tag_names = post.tags.collect{ |t| t.name }
+    tag_names.should include('code')
+    tag_names.should include('web')
+  end 
+
+  it "should allow tags (with taglist attribute)" do
+    post = Post.create(Factory.attributes_for(:post))
+    post.tags.length.should == 2
+    tag_names = post.tags.collect{ |t| t.name }
+    tag_names.should include('code')
+    tag_names.should include('web')
+  end 
 
   it "should not allow the same tag twice" do
-    pending
+    pending("not sure how to do this without a unique on has n :through associations")
   end
 
-  it "should update the tags if they change after update" do
-    pending
+  it "should update the tags if they change after update (with taglist attribute)" do
+    post = Post.create(Factory.attributes_for(:post))
+    post.tags.length.should == 2
+    tag_names = post.tags.collect{ |t| t.name }
+    tag_names.should include('code')
+    tag_names.should include('web')
+    post.update(:taglist => 'code, personal')
+    post.tags.reload
+    post.tags.length.should == 2
+    tag_names = post.tags.collect{ |t| t.name }
+    tag_names.should include('code')
+    tag_names.should include('personal')
   end
 
   it "should delete all tags if they were erased on an update" do
-    pending
+    post = Post.create(Factory.attributes_for(:post))
+    post.tags.length.should == 2
+    tag_names = post.tags.collect{ |t| t.name }
+    tag_names.should include('code')
+    tag_names.should include('web')
+    post.update(:taglist => nil)
+    post.tags.reload
+    post.tags.length.should == 0
   end
 
   it "should fill in the published_at date when published? is true" do
-    pending
+    post = Post.create(Factory.attributes_for(:post, :published => false))
+    post.published.should be_false
+    post.published_at.should be_nil
+    post.update(:published => true)
+    post.published.should be_true
+    post.published_at.should_not be_nil
   end
 
   it "should remove the published_at date if currently published, but no longer published?" do
-    pending
+    post = Post.create(Factory.attributes_for(:post))
+    post.published.should be_true
+    post.published_at.should_not be_nil
+    post.update(:published => false)
+    post.published.should be_false
+    post.published_at.should be_nil
   end
 
   after(:each) do

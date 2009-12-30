@@ -45,7 +45,10 @@ describe 'Model - Page' do
   end
 
   it "should not allow the same title/slug" do
-    pending
+    page = Page.create(Factory.attributes_for(:page))
+    page2 = Page.create(Factory.attributes_for(:page))
+    page2.should_not be_valid
+    page2.errors[:title].should include("Title is already taken")
   end
 
   after(:each) do
