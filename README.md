@@ -5,7 +5,7 @@ I'm writing this one to get a better grasp on:
 * Sinatra.rb <http://www.sinatrarb.com/>
 * Haml <http://haml-lang.com/>
 * Sass <http://sass-lang.com/>
-* Datamapper <http://datamapper.org/doku.php>
+* MongoDB <http://mongodb.org/> & MongoMapper <http://github.com/jnunemaker/mongomapper/>
 
 We'll see how it goes.
 
@@ -13,9 +13,7 @@ GEMS & VERSIONS NEEDED:
 
 * sinatra >= 0.9.4
 * sinatra_more >= 0.3.29
-* datamapper >= 0.10.2 (dm-core, dm-timestamps, dm-validations, and dm-aggregates)
-* dm-pager >= 1.0.1
-* do_mysql >= 0.10.0
+* mongo_mapper >= 0.6.10 (and its dependencies)
 * haml >= 2.2.16
 * rdiscount >= 1.3.5
 
