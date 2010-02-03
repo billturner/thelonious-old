@@ -6,7 +6,7 @@
       =markdown(post.body)
   %div.meta
     =post.published_at.strftime('%Y-%m-%d %I:%M%p')
-    -if post.tags.count > 0
+    -if !post.tags.empty?
       &mdash;
       -post.tags.each do |tag|
-        =link_to "##{tag.name}", tag_url(tag), { :rel => "category tag", :title => "View other posts tagged with '#{tag.name}'"}
+        =link_to "##{tag}", tag_url(tag), { :rel => "category tag", :title => "View other posts tagged with '#{tag}'"}

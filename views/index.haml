@@ -3,7 +3,7 @@
 %div#posts
   -@posts.each do |post|
     =haml :single_post, :layout => false, :locals => { :post => post }
-  -if request.env['PATH_INFO'] =~ /\/tag/
-    =@posts.pager.to_html("/tag/#{@tag.name}") if !@posts.pager.nil?
-  -else
-    =@posts.pager.to_html("/") if !@posts.pager.nil?
+  / -if request.env['PATH_INFO'] =~ /\/tag/
+  /   =@posts.pager.to_html("/tag/#{@tag.name}") if !@posts.pager.nil?
+  / -else
+  /   =@posts.pager.to_html("/") if !@posts.pager.nil?

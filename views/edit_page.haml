@@ -1,3 +1,0 @@
-%h2= @page_title
--form_for @page, "/edit_page/#{@page.id}", :method => 'POST', :class => "admin-form" do |f|
-  =partial 'page_form', :object => @page, :locals => { :f => f }

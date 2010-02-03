@@ -1,0 +1,15 @@
+%h2= @page_title
+-form_for @page, (creation_form? ? "/new_page" : "/edit_page/#{@page.id}"), :method => 'POST', :class => "admin-form" do |f|
+  %dl
+    %dt
+      =f.label :title, :caption => "Page Title"
+    %dd
+      =f.text_field :title, :value => @page.title, :size => 50
+    %dt
+      =f.label :title, :caption => "Page Body"
+    %dd
+      =find_and_preserve do
+        %textarea{ :name => 'page[body]', :cols => 50, :rows => 20 } 
+          =@page.body
+    %dt
+      =f.submit "Submit"

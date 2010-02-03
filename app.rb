@@ -2,10 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra_more/markup_plugin'
 require 'sinatra_more/render_plugin'
-require 'dm-core'
-require 'dm-timestamps'
-require 'dm-aggregates'
-require 'dm-pager'
+require 'mongo_mapper'
 require 'haml'
 require 'rdiscount'
 
@@ -18,25 +15,24 @@ class SinatraBlog < Sinatra::Application
   # views & public
   set :public, File.join(File.dirname(__FILE__), 'public')
   set :views, File.join(File.dirname(__FILE__), 'views')
-  
+  set :lib, File.join(File.dirname(__FILE__), 'lib')
+
   # Sass via Rack settings
   Sass::Plugin.options[:css_location] = File.join(SinatraBlog.public, 'stylesheets')
   Sass::Plugin.options[:template_location] = File.join(SinatraBlog.public, 'stylesheets', 'sass')
-  
+
   # allow sessions
   enable :sessions
-
-  # log datamapper queries
-  DataMapper::Logger.new(STDOUT, :debug) if development?
 
   # haml settings
   set :haml, { :attr_wrapper => '"' }
 
   register SinatraMore::MarkupPlugin
   register SinatraMore::RenderPlugin
-  
+
   # config & db connection ( + models )
-  ['config/settings.rb', 'config/database.rb'].each {|file| require file }
+  require 'config/settings'
+  require 'lib/database'
 
   # a few helpers
   helpers do
@@ -46,7 +42,7 @@ class SinatraBlog < Sinatra::Application
     end
 
     def tag_url(tag)
-      "#{BLOG_URL}/tag/#{tag.slug}"
+      "#{BLOG_URL}/tag/#{tag}"
     end
 
     def page_url(page)
@@ -73,6 +69,10 @@ class SinatraBlog < Sinatra::Application
       session[:user]
     end
 
+    def creation_form?
+      ['/new_post', '/new_page'].include?(request.path_info)
+    end
+
   end
 
   # errors
@@ -83,8 +83,7 @@ class SinatraBlog < Sinatra::Application
 
   # routing & actions
   get '/' do
-    page_number = params[:page] || 1
-    @posts = Post.page(page_number, :per_page => POSTS_PER_PAGE, :published => true, :order => [:published_at.desc])
+    @posts = Post.paginate({ :per_page => POSTS_PER_PAGE, :page => params[:page] || 1, :order => "published_at DESC", :published => true })
     @page_title = BLOG_DESCRIPTION
     haml :index
   end
@@ -98,6 +97,8 @@ class SinatraBlog < Sinatra::Application
 
   get '/archive' do
     @page_title = 'Archived Posts'
+    @posts = Post.all(:published => true, :order => "published_at DESC")
+    @tags = Post.all_tags
     haml :archive
   end
 
@@ -108,13 +109,10 @@ class SinatraBlog < Sinatra::Application
     haml :page
   end
 
-  get "/tag/:slug" do
-    @tag = Tag.first(:slug => params[:slug])
-    raise not_found unless @tag
-    page_number = params[:page] || 1
-    @posts = @tag.posts(:published => true, :order => [:published_at.desc]).page(page_number, :per_page => POSTS_PER_PAGE)
+  get "/tag/:tag" do
+    @posts = Post.paginate({ :per_page => POSTS_PER_PAGE, :page => params[:page] || 1, :order => "published_at DESC", :conditions => {:tags => [Rack::Utils.unescape(params[:tag])], :published => true }} )
     raise not_found unless @posts
-    @page_title = "All posts tagged with ##{@tag.name}"
+    @page_title = "All posts tagged with ##{params[:tag]}"
     haml :index
   end
 
@@ -152,7 +150,7 @@ class SinatraBlog < Sinatra::Application
     authenticate!
     @page_title = "Add Post"
     @post = Post.new
-    haml :new_post
+    haml :post_form
   end
   # TODO: 1) Fix redirect; 2) force back to edit if errors
   post '/new_post' do
@@ -164,13 +162,13 @@ class SinatraBlog < Sinatra::Application
   get '/edit_post/:id' do
     authenticate!
     @page_title = "Edit Post"
-    @post = Post.get(params[:id])
-    haml :edit_post
+    @post = Post.find(params[:id])
+    haml :post_form
   end
   post '/edit_post/:id' do
     authenticate!
-    @post = Post.get(params[:id])
-    @post.update(params[:post])
+    @post = Post.find(params[:id])
+    @post.update_attributes(params[:post])
     redirect '/all_posts'
   end
   get '/all_posts' do
@@ -185,7 +183,7 @@ class SinatraBlog < Sinatra::Application
     authenticate!
     @page_title = "Add Page"
     @page = Page.new
-    haml :new_page
+    haml :page_form
   end
   # TODO: 1) Fix redirect; 2) force back to edit if errors
   post '/new_page' do
@@ -203,13 +201,13 @@ class SinatraBlog < Sinatra::Application
   get '/edit_page/:id' do
     authenticate!
     @page_title = "Edit Page"
-    @page = Page.get(params[:id])
-    haml :edit_page
+    @page = Page.find(params[:id])
+    haml :page_form
   end
   post '/edit_page/:id' do
     authenticate!
-    @page = Page.get(params[:id])
-    @page.update(params[:page])
+    @page = Page.find(params[:id])
+    @page.update_attributes(params[:page])
     redirect '/all_pages'
   end
 

@@ -5,7 +5,7 @@ tmp/*
 .sass-cache/*
 public/cache/*
 coverage/*
-config/database.rb
+lib/database.rb
 config/settings.rb
 views/layout.haml
 public/stylesheets/*.css

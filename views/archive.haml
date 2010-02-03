@@ -1,12 +1,12 @@
 %h2= @page_title
 %h3 Tags Used for Posts
 %ul.archive-tags
-  -Tag.all(:order => [ :name.asc ]).each do |tag|
+  -@tags.flatten.compact.uniq.each do |tag|
     %li
-      =link_to "##{tag.name}", tag_url(tag), { :rel => "category tag", :title => "View other posts tagged with '#{tag.name}'"}
+      =link_to "##{tag}", tag_url(tag), { :rel => "category tag", :title => "View other posts tagged with '#{tag}'"}
 %h3 Chronological Archive (newest first)
 %ul
-  -Post.all_published.each do |post|
+  -@posts.each do |post|
     %li
       %p
         =link_to post.title, permalink_url(post), { :rel => "bookmark", :title => "Permanent link for this post"}
@@ -15,4 +15,4 @@
         -if post.tags.count > 0
           &mdash;
           -post.tags.each do |tag|
-            =link_to "##{tag.name}", tag_url(tag), { :rel => "category tag", :title => "View other posts tagged with '#{tag.name}'"}
+            =link_to "##{tag}", tag_url(tag), { :rel => "category tag", :title => "View other posts tagged with '#{tag}'"}
