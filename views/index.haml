@@ -3,7 +3,12 @@
 %div#posts
   -@posts.each do |post|
     =haml :single_post, :layout => false, :locals => { :post => post }
-  / -if request.env['PATH_INFO'] =~ /\/tag/
-  /   =@posts.pager.to_html("/tag/#{@tag.name}") if !@posts.pager.nil?
-  / -else
-  /   =@posts.pager.to_html("/") if !@posts.pager.nil?
+  -if @posts.total_pages > 0
+    .pagination
+      -if !@posts.previous_page.nil?
+        .previous_link
+          =link_to "&laquo; Newer Entries", "/#{'tag/'+params[:tag] if request.env['PATH_INFO'] =~ /\/tag/}?page=#{@posts.previous_page}"
+      -if !@posts.next_page.nil?
+        .next_link
+          =link_to "Older Entries &raquo;", "/#{'tag/'+params[:tag] if request.env['PATH_INFO'] =~ /\/tag/}?page=#{@posts.next_page}"
+    .clear

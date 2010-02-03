@@ -1,7 +1,7 @@
 %h2= @page_title
 %h3 Tags Used for Posts
 %ul.archive-tags
-  -@tags.flatten.compact.uniq.each do |tag|
+  -@tags.each do |tag|
     %li
       =link_to "##{tag}", tag_url(tag), { :rel => "category tag", :title => "View other posts tagged with '#{tag}'"}
 %h3 Chronological Archive (newest first)

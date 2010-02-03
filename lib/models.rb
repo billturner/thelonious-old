@@ -29,11 +29,12 @@ class Post
 
     class << self
 
+      # TODO: perhap find another way to execute code
+      # like this: http://www.gitorious.org/shapado/shapado/blobs/master/config/initializers/mongo.rb
       def all_tags(conditions = {})
         @all_tags ||= SinatraBlog.lib + "/tag_list.js"
         self.database.eval(File.read(@all_tags), conditions)
       end
-
 
       def recently_published
         self.all(:published => true, :order => "published_at DESC", :limit => 15)

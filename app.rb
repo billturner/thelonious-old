@@ -42,7 +42,7 @@ class SinatraBlog < Sinatra::Application
     end
 
     def tag_url(tag)
-      "#{BLOG_URL}/tag/#{tag}"
+      "#{BLOG_URL}/tag/#{Rack::Utils.escape(tag)}"
     end
 
     def page_url(page)
@@ -50,7 +50,7 @@ class SinatraBlog < Sinatra::Application
     end
 
     def markdown(text)
-      RDiscount.new(text).to_html
+      RDiscount.new(text, :smart).to_html
     end
 
     def cdata(text)
@@ -88,6 +88,13 @@ class SinatraBlog < Sinatra::Application
     haml :index
   end
 
+  get "/tag/:tag" do
+    @posts = Post.paginate({ :per_page => POSTS_PER_PAGE, :page => params[:page] || 1, :order => "published_at DESC", :conditions => {:tags => [Rack::Utils.unescape(params[:tag])], :published => true }} )
+    raise not_found unless @posts.length > 0
+    @page_title = "All posts tagged with ##{params[:tag]}"
+    haml :index
+  end
+
   get "/:year/:month/:slug" do
     @post = Post.first(:slug => params[:slug])
     raise not_found unless @post
@@ -98,7 +105,7 @@ class SinatraBlog < Sinatra::Application
   get '/archive' do
     @page_title = 'Archived Posts'
     @posts = Post.all(:published => true, :order => "published_at DESC")
-    @tags = Post.all_tags
+    @tags = Post.all_tags(:published => true).flatten.compact.uniq
     haml :archive
   end
 
@@ -109,13 +116,6 @@ class SinatraBlog < Sinatra::Application
     haml :page
   end
 
-  get "/tag/:tag" do
-    @posts = Post.paginate({ :per_page => POSTS_PER_PAGE, :page => params[:page] || 1, :order => "published_at DESC", :conditions => {:tags => [Rack::Utils.unescape(params[:tag])], :published => true }} )
-    raise not_found unless @posts
-    @page_title = "All posts tagged with ##{params[:tag]}"
-    haml :index
-  end
-
   get "/rss" do
     content_type 'application/rss+xml', :charset => 'utf-8'
     haml :rss, :layout => false
@@ -123,6 +123,9 @@ class SinatraBlog < Sinatra::Application
 
   get '/sitemap.xml' do
     content_type 'text/xml', :charset => 'utf-8'
+    @posts = Post.all(:published => true, :order => "published_at DESC")
+    @tags = Post.all_tags(:published => true).flatten.compact.uniq
+    @pages = Page.all
     haml :sitemap, :layout => false
   end
 

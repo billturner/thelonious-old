@@ -17,6 +17,6 @@
         %pubDate= post.published_at.rfc822
         =find_and_preserve do
           %description<= cdata(markdown(post.body))
-        -if post.tags.length > 0
+        -if !post.tags.empty?
           -post.tags.each do |tag|
-            %category= cdata_and_escape(tag.name)
+            %category= cdata_and_escape(tag)

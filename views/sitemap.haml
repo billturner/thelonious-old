@@ -4,17 +4,17 @@
     %loc= "#{BLOG_URL}/"
     %priority 1.0
     %changefreq daily
-  -Post.all_published.each do |post|
+  -@posts.each do |post|
     %url
       %loc= permalink_url(post)
       %priority 0.6
       %changefreq monthly
-  -Tag.all.each do |tag|
+  -@tags.each do |tag|
     %url
       %loc= tag_url(tag)
       %priority 0.8
       %changefreq weekly
-  -Page.all.each do |page|
+  -@pages.each do |page|
     %url
       %loc= page_url(page)
       %priority 0.6
