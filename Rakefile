@@ -3,18 +3,20 @@ require 'sinatra' unless defined?(Sinatra)
 require 'spec/rake/spectask'
 
 namespace :app do
-  
+
   desc "Move .example files into place"
-  task :setup_files do
+  task :setup do
     puts    "Moving settings file..."
     system  "mv config/settings.rb.sample config/settings.rb"
+    puts    "Moving database file..."
+    system  "mv lib/database.rb.sample lib/database.rb"
     puts    "Moving layout view file..."
     system  "mv views/layout.example views/layout.haml"
     puts    "Moving custom CSS file..."
     system  "mv views/stylesheets/custom.example views/stylesheets/custom.sass"
     puts    "Done."
   end
-  
+
 end
 
 Spec::Rake::SpecTask.new(:spec) do |spec|

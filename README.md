@@ -27,12 +27,10 @@ For testing, you'll also need:
 SETTING IT UP:
 
 1. Grab the code from Github
-2. Move/copy config/database.db.sample => config/database.rb 
-3. Fill in your DB credentials (host, user, pass, DB)
-4. Create the DB if it does not already exist
-5. Run "rake app:setup_files" to copy the base files live
-6. a few more steps here..
-7. Maybe don't try this yet. Let me make the setup a little better.
+2. Run "rake app:setup" to copy the base example files
+3. Fill in your MongoDB information in lib/database.rb
+4. Adjust the settings (like admin user & pass) in config/settings.rb
+5. There may be another step. Hmm
 
 TODO:
 
