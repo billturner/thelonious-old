@@ -10,47 +10,47 @@ describe 'Model - Post' do
     post = Factory.build(:post)
     post.should be_valid
   end
-  
+
   it 'should not be valid without a body' do
     post = Factory.build(:post, :body => nil)
     post.should_not be_valid
     post.errors[:body].should include("Body must not be blank")
   end
-  
+
   it 'should not be valid without a title' do
     post = Factory.build(:post, :title => nil)
     post.should_not be_valid
     post.errors[:title].should include("Title must not be blank")
   end
-  
+
   it 'should have a title' do
     post = Factory.build(:post)
     post.title.should == 'Test Post'
   end
-  
+
   it 'should have a body' do
     post = Factory.build(:post)
     post.body.should == 'This is some test content!'
   end
-  
+
   it "should generate a slug" do
     post = Post.create(Factory.attributes_for(:post))
     post.slug.should_not be_empty
   end
-  
+
   it "should not generate a slug with a dash at the end" do
     post = Post.create(Factory.attributes_for(:post, :title => "This is a test?"))
     post.slug.should_not == 'this-is-a-test-'
     post.slug.should == 'this-is-a-test'
   end
-  
+
   it "should not allow the same title/slug" do
     post1 = Post.create(Factory.attributes_for(:post))
     post2 = Post.create(Factory.attributes_for(:post))
     post2.should_not be_valid
     post2.errors[:title].should include("Title is already taken")
   end
-  
+
   it "should allow tags" do
     post = Factory.build(:post, :taglist => nil)
     tag1 = Factory.build(:tag, :name => 'code')
@@ -62,7 +62,7 @@ describe 'Model - Post' do
     tag_names.should include('code')
     tag_names.should include('web')
   end 
-  
+
   it "should allow tags (with taglist attribute)" do
     post = Post.create(Factory.attributes_for(:post))
     post.tags.length.should == 2
@@ -108,7 +108,7 @@ describe 'Model - Post' do
     post.published.should be_true
     post.published_at.should_not be_nil
   end
-  
+
   it "should remove the published_at date if currently published, but no longer published?" do
     post = Post.create(Factory.attributes_for(:post))
     post.published.should be_true
@@ -117,7 +117,7 @@ describe 'Model - Post' do
     post.published.should be_false
     post.published_at.should be_nil
   end
-  
+
   it "should not allow the same tag twice" do
     pending("not sure how to do this without a unique on has n :through associations")
   end

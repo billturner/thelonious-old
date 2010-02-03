@@ -37,6 +37,8 @@ class SinatraBlog < Sinatra::Application
   # a few helpers
   helpers do
 
+    # TODO: set up some sort of flash[] system (or rack-flash?)
+
     def permalink_url(post)
       "#{BLOG_URL}/#{post.created_at.strftime('%Y/%m')}/#{post.slug}"
     end

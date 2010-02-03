@@ -1,38 +1,12 @@
-configure :development do
-
-  DataMapper.setup(:default, {
-    :adapter  => 'mysql',
-    :host     => 'localhost',
-    :username => 'user',
-    :password => 'pass',
-    :database => 'sinatrablog_development'
-  })
-
-end
-
-configure :production do
-
-  DataMapper.setup(:default, {
-    :adapter  => 'mysql',
-    :host     => 'localhost',
-    :username => 'user',
-    :password => 'pass',
-    :database => 'sinatrablog_production'
-  })
-
-end
+MongoMapper.connection = Mongo::Connection.new('localhost')
 
 configure :test do
+  MongoMapper.database = 'sinatrablog_test'
+end
 
-  DataMapper.setup(:default, {
-    :adapter  => 'mysql',
-    :host     => 'localhost',
-    :username => 'user',
-    :password => 'pass',
-    :database => 'sinatrablog_test'
-  })
-
+configure :development, :production do
+  MongoMapper.database = 'sinatrablog'
 end
 
 # load model file
-require 'config/models.rb'
+require 'lib/models'

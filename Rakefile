@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'dm-core'
 require 'sinatra' unless defined?(Sinatra)
 require 'spec/rake/spectask'
 
@@ -14,26 +13,6 @@ namespace :app do
     puts    "Moving custom CSS file..."
     system  "mv views/stylesheets/custom.example views/stylesheets/custom.sass"
     puts    "Done."
-  end
-  
-end
-
-namespace :db do
-
-  require 'config/database'
-  
-  desc "Migrate the database"
-  task :migrate => :environment do
-    DataMapper.auto_migrate!
-  end
-
-  desc "Upgrade the database"
-  task :upgrade => :environment do
-    DataMapper.auto_upgrade!
-  end
-
-  task :environment do
-    ENV['RACK_ENV'] || :development
   end
   
 end

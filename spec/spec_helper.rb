@@ -4,7 +4,7 @@ require 'spec'
 require 'spec/interop/test'
 require 'rack/test'
 require 'factory_girl'
- 
+
 # set test environment
 Sinatra::Base.set :environment, :test
 Sinatra::Base.set :run, false

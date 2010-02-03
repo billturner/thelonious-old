@@ -1,6 +1,6 @@
 #posts
   :text-align left
-  
+
   .post
     :margin-bottom 15px
 
@@ -19,20 +19,20 @@ ul.pager
   :margin 5px 0
   :border 1px solid #aaa
   :background #eee
-  
+
 #sidebar
   :text-align left
 
   .sidebarbox
     :margin-bottom 10px
-    
+
     h4
       :margin-bottom 3px
       :border-bottom 1px dotted #333
-    
+
     p
       :padding-left 2px
-      
+
     ul, li
       :margin-left 2px
       :list-style-type none
