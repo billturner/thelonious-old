@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 describe 'Model - Page' do
   
   before(:each) do
-
+    Page.delete_all
   end
 
   it 'should be valid' do
@@ -14,13 +14,15 @@ describe 'Model - Page' do
   it 'should not be valid without a body' do
     page = Factory.build(:page, :body => nil)
     page.should_not be_valid
-    page.errors[:body].should include("Body must not be blank")
+    page.errors[:body].should_not be_empty
+    page.errors[:body].should include("can't be empty")
   end
 
   it 'should not be valid without a title' do
     page = Factory.build(:page, :title => nil)
     page.should_not be_valid
-    page.errors[:title].should include("Title must not be blank")
+    page.errors[:title].should_not be_empty
+    page.errors[:title].should include("can't be empty")
   end
 
   it 'should have a title' do
@@ -48,11 +50,8 @@ describe 'Model - Page' do
     page = Page.create(Factory.attributes_for(:page))
     page2 = Page.create(Factory.attributes_for(:page))
     page2.should_not be_valid
-    page2.errors[:title].should include("Title is already taken")
-  end
-
-  after(:each) do
-    Page.all.destroy!
+    page2.errors[:title].should_not be_empty
+    page2.errors[:title].should include("has already been taken")
   end
 
 end

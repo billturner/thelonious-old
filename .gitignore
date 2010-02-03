@@ -11,3 +11,5 @@ views/layout.haml
 public/stylesheets/*.css
 public/stylesheets/sass/custom.sass
 spec/test.sqlite3
+Capfile
+config/deploy.rb
