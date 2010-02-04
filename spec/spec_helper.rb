@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'spec'
+require 'webrat'
 require 'spec/interop/test'
 require 'rack/test'
 require 'factory_girl'
@@ -19,7 +20,12 @@ def app
   Sinatra::Application
 end
 
+Webrat.configure do |config|
+  config.mode = :rack
+end
+
 Spec::Runner.configure do |config|
-  # reset database before each example is run
-  #config.before(:each) { DataMapper.auto_migrate! }
+  config.include Rack::Test::Methods
+  config.include Webrat::Methods
+  config.include Webrat::Matchers
 end

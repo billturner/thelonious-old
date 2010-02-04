@@ -2,8 +2,6 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe "General App Tests" do
 
-  include Rack::Test::Methods
-
   def app
     @app ||= SinatraBlog
   end
@@ -17,10 +15,11 @@ describe "General App Tests" do
     get '/'
     last_response.headers["Content-Type"].should == "text/html"
   end
-  
+
   it "should respond to 404" do
     get '/nothing-is-at-this-url'
     last_response.status.should == 404
+    last_response.body.should contain("404 (Not Found)")
   end
-  
+
 end

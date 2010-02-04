@@ -19,7 +19,6 @@ GEMS & VERSIONS NEEDED:
 
 For testing, you'll also need:
 
-* do_sqlite3 >= 0.10.0
 * rack-test >= 0.5.3
 * rspec >= 1.2.9
 * factory_girl >= 1.2.3

@@ -5,6 +5,7 @@ require 'sinatra_more/render_plugin'
 require 'mongo_mapper'
 require 'haml'
 require 'rdiscount'
+require 'active_support/values/time_zone'
 
 # Use sass's Rack integration
 require 'sass/plugin/rack'
@@ -22,7 +23,10 @@ class SinatraBlog < Sinatra::Application
   Sass::Plugin.options[:template_location] = File.join(SinatraBlog.public, 'stylesheets', 'sass')
 
   # allow sessions
-  enable :sessions
+  use Rack::Session::Cookie
+
+  # turn off extra logging
+  disable :logging
 
   # haml settings
   set :haml, { :attr_wrapper => '"' }
@@ -34,6 +38,9 @@ class SinatraBlog < Sinatra::Application
   require 'config/settings'
   require 'lib/database'
 
+  # Set time zone
+  Time.zone = TIME_ZONE
+  
   # a few helpers
   helpers do
 

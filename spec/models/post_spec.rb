@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe 'Model - Post' do
-  
+
   before(:each) do
     Post.delete_all
   end
@@ -60,53 +60,52 @@ describe 'Model - Post' do
       post2.errors[:title].should include("has already been taken")
     end
 
-    it "should allow tags" # do
-     #    post = Factory.build(:post, :taglist => nil)
-     #    tag1 = Factory.build(:tag, :name => 'code')
-     #    tag2 = Factory.build(:tag, :name => 'web')
-     #    post.tags << tag1
-     #    post.tags << tag2
-     #    post.tags.length.should == 2
-     #    tag_names = post.tags.collect{ |t| t.name }
-     #    tag_names.should include('code')
-     #    tag_names.should include('web')
-     #  end 
-  
-    it "should allow tags (with taglist attribute)" # do
-     #    post = Post.create(Factory.attributes_for(:post))
-     #    post.tags.length.should == 2
-     #    tag_names = post.tags.collect{ |t| t.name }
-     #    tag_names.should include('code')
-     #    tag_names.should include('web')
-     #  end 
+    it "should allow tags" do
+      post = Factory.build(:post)
+      post.tags.length.should == 2
+      post.tags.should include('code')
+      post.tags.should include('web')
+    end 
 
-    it "should update the tags if they change after update (with taglist attribute)" do
-      pending("This works in production; maybe a sqlite issue?")
-      # post = Post.create(Factory.attributes_for(:post))
-      # post.tags.length.should == 2
-      # tag_names = post.tags.collect{ |t| t.name }
-      # tag_names.should include('code')
-      # tag_names.should include('web')
-      # puts "\n\nABOUT TO UPDATE\n\n"
-      # post.update(:taglist => 'code, personal')
-      # 
-      # post.taggings.reload
-      # post.tags.length.should == 2
-      # tag_names = post.tags.collect{ |t| t.name }
-      # tag_names.should include('code')
-      # tag_names.should include('personal')
+    it "should update the tags if they change after update" do
+      post = Factory.build(:post)
+      post.tags.length.should == 2
+      post.tags.should include('code')
+      post.tags.should include('web')
+      post.update_attributes(:tags => 'code, personal, another')
+      post.tags.length.should == 3
+      post.tags.should include('code')
+      post.tags.should include('personal')
+      post.tags.should include('another')
     end
 
     it "should delete all tags if they were erased on an update" do
-      pending("This works in production; maybe a sqlite issue?")
-      # post = Post.create(Factory.attributes_for(:post))
-      # post.tags.length.should == 2
-      # tag_names = post.tags.collect{ |t| t.name }
-      # tag_names.should include('code')
-      # tag_names.should include('web')
-      # post.update(:taglist => '')
-      # post.tags.reload
-      # post.tags.length.should == 0
+      post = Factory.build(:post)
+      post.tags.length.should == 2
+      post.tags.should include('code')
+      post.tags.should include('web')
+      post.update_attributes(:tags => '')
+      post.tags.length.should == 0
+      post.tags.should be_empty
+    end
+
+    it "should add tags if created with none, and added later" do
+      post = Factory.build(:post, :tags => '')
+      post.tags.should be_empty
+      post.tags.length.should == 0
+      post.update_attributes(:tags => 'code, web')
+      post.tags.should_not be_empty
+      post.tags.length.should == 2
+      post.tags.should include('code')
+      post.tags.should include('web')
+    end
+
+    it "should not allow the same tag twice" do
+      post = Factory.build(:post, :tags => 'code, web, code')
+      post.tags.should_not be_empty
+      post.tags.length.should == 2
+      post.tags.should include('code')
+      post.tags.should include('web')
     end
 
     it "should fill in the published_at date when published? is true" do
@@ -125,10 +124,6 @@ describe 'Model - Post' do
       post.update_attributes(:published => false)
       post.published.should be_false
       post.published_at.should be_nil
-    end
-
-    it "should not allow the same tag twice" do
-      pending("not sure how to do this without a unique on has n :through associations")
     end
 
   end
