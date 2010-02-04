@@ -6,6 +6,7 @@ require 'mongo_mapper'
 require 'haml'
 require 'rdiscount'
 require 'active_support/values/time_zone'
+require 'rack-flash'
 
 # Use sass's Rack integration
 require 'sass/plugin/rack'
@@ -22,8 +23,9 @@ class SinatraBlog < Sinatra::Application
   Sass::Plugin.options[:css_location] = File.join(SinatraBlog.public, 'stylesheets')
   Sass::Plugin.options[:template_location] = File.join(SinatraBlog.public, 'stylesheets', 'sass')
 
-  # allow sessions
+  # allow sessions & flash messages
   use Rack::Session::Cookie
+  use Rack::Flash #, :sweep => true
 
   # turn off extra logging
   disable :logging
@@ -31,6 +33,7 @@ class SinatraBlog < Sinatra::Application
   # haml settings
   set :haml, { :attr_wrapper => '"' }
 
+  # pull in the sinatra-more helpers
   register SinatraMore::MarkupPlugin
   register SinatraMore::RenderPlugin
 
@@ -105,9 +108,11 @@ class SinatraBlog < Sinatra::Application
   post '/login' do
     if params[:login][:username] == LOGIN_USERNAME && params[:login][:password] == LOGIN_PASSWORD
       session[:user] = LOGIN_USERNAME
+      flash[:notice] = "Logged in!"
       redirect '/'
     else
-      redirect '/login'
+      flash[:notice] = "You did not supply valid credentials"
+      haml :login
     end
   end
   get '/logout' do
@@ -126,8 +131,13 @@ class SinatraBlog < Sinatra::Application
   # TODO: 1) Fix redirect; 2) force back to edit if errors
   post '/new_post' do
     authenticate!
-    @post = Post.create(params[:post])
-    redirect '/'
+    @post = Post.new(params[:post])
+    if @post.save
+      flash[:notice] = 'The new post was saved successfully'
+      redirect '/all_posts'
+    else
+      haml :post_form
+    end
   end
   # Edit existing post
   get '/edit_post/:id' do
@@ -139,8 +149,12 @@ class SinatraBlog < Sinatra::Application
   post '/edit_post/:id' do
     authenticate!
     @post = Post.find(params[:id])
-    @post.update_attributes(params[:post])
-    redirect '/all_posts'
+    if @post.update_attributes(params[:post])
+      flash[:notice] = 'The post was updated successfully'
+      redirect '/all_posts'
+    else
+      haml :post_form
+    end
   end
   get '/all_posts' do
     authenticate!

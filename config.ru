@@ -6,6 +6,7 @@ require 'mongo_mapper'
 require 'haml'
 require 'rdiscount'
 require 'active_support/values/time_zone'
+require 'rack-flash'
 
 # Use sass's Rack integration
 require 'sass/plugin/rack'

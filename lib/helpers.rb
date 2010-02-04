@@ -2,7 +2,18 @@ class SinatraBlog
 
   module Helpers
 
-    # TODO: set up some sort of flash[] system (or rack-flash?)
+    def errors_for(o)
+      out = ''
+      if o.errors && !o.errors.empty?
+        out += '<div class="error_messages">'
+        out += '<h3 class="error_messages_header">The following errors have occurred:</h3>'
+        out += '<ul>'
+        o.errors.full_messages.each do |msg|
+          out += "<li>#{msg}</li>"
+        end
+        out += '</ul></div>'
+      end
+    end
 
     def permalink_url(post)
       "#{BLOG_URL}/#{post.created_at.strftime('%Y/%m')}/#{post.slug}"
@@ -25,7 +36,7 @@ class SinatraBlog
     end
 
     def cdata_and_escape(text)
-      "<![CDATA[#{escape_html(text)}]]>"
+      "<![CDATA[#{Rack::Utils.escape_html(text)}]]>"
     end
 
     def authenticate!
