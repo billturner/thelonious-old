@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
-describe "Application / View Tests" do
+describe "General View / Controller Spec" do
 
   it "should respond to /" do
     get '/'
@@ -15,7 +15,7 @@ describe "Application / View Tests" do
   it "should respond to 404" do
     get '/nothing-is-at-this-url'
     last_response.status.should == 404
-    last_response.body.should contain("404 (Not Found)")
+    last_response.should have_selector("h2", :content => "404 (Not Found)")
   end
 
 end
