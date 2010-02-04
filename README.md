@@ -16,12 +16,14 @@ GEMS & VERSIONS NEEDED:
 * mongo_mapper >= 0.6.10 (and its dependencies)
 * haml >= 2.2.16
 * rdiscount >= 1.3.5
+* active_support (from Rails, probably version > 2.0)
 
 For testing, you'll also need:
 
 * rack-test >= 0.5.3
 * rspec >= 1.2.9
 * factory_girl >= 1.2.3
+* webrat >= 0.6.0
 
 SETTING IT UP:
 
@@ -29,7 +31,7 @@ SETTING IT UP:
 2. Run "rake app:setup" to copy the base example files
 3. Fill in your MongoDB information in lib/database.rb
 4. Adjust the settings (like admin user & pass) in config/settings.rb
-5. There may be another step. Hmm
+5. There may be another step. Hmm.
 
 TODO:
 

@@ -11,7 +11,7 @@ require 'active_support/values/time_zone'
 require 'sass/plugin/rack'
 use Sass::Plugin::Rack
 
-require 'app'
+require 'application'
 
 map '/' do
   run SinatraBlog

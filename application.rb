@@ -40,7 +40,7 @@ class SinatraBlog < Sinatra::Application
 
   # Set time zone
   Time.zone = TIME_ZONE
-  
+
   # a few helpers
   helpers do
 
@@ -127,6 +127,7 @@ class SinatraBlog < Sinatra::Application
 
   get "/rss" do
     content_type 'application/rss+xml', :charset => 'utf-8'
+    @posts = Post.recently_published
     haml :rss, :layout => false
   end
 

@@ -1,10 +1,6 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
-describe "General App Tests" do
-
-  def app
-    @app ||= SinatraBlog
-  end
+describe "Application / View Tests" do
 
   it "should respond to /" do
     get '/'
