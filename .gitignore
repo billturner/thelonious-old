@@ -4,6 +4,7 @@
 tmp/*
 .sass-cache/*
 public/cache/*
+public/images/*
 coverage/*
 lib/database.rb
 config/settings.rb
