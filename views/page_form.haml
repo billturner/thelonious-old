@@ -1,4 +1,7 @@
 %h2= @page_title
+
+=error_messages_for(@page)
+
 -form_for @page, (creation_form? ? "/new_page" : "/edit_page/#{@page.id}"), :method => 'POST', :class => "admin-form" do |f|
   %dl
     %dt

@@ -17,6 +17,7 @@ GEMS & VERSIONS NEEDED:
 * haml >= 2.2.16
 * rdiscount >= 1.3.5
 * active_support (from Rails, probably version > 2.0)
+* rack-flash
 
 For testing, you'll also need:
 

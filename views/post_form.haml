@@ -1,6 +1,6 @@
 %h2= @page_title
 
-=errors_for(@post)
+=error_messages_for(@post)
 
 -form_for @post, (creation_form? ? "/new_post" : "/edit_post/#{@post.id}"), :method => 'POST', :class => "admin-form" do |f|
   %dl

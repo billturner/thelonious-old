@@ -13,7 +13,7 @@ Sinatra::Base.set :raise_errors, true
 Sinatra::Base.set :logging, false
 
 # bring in the app file
-require File.join(File.dirname(__FILE__), '..', 'application')
+require File.join(File.dirname(__FILE__), '..', 'thelonious')
 
 Webrat.configure do |config|
   config.mode = :rack
@@ -22,12 +22,12 @@ end
 Spec::Runner.configure do |config|
 
   def app
-    @app ||= SinatraBlog
+    @app ||= Thelonious
   end
 
   config.include Rack::Test::Methods
   config.include Webrat::Methods
   config.include Webrat::Matchers
-  config.include SinatraBlog::Helpers
+  config.include Thelonious::Helpers
 
 end

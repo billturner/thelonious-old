@@ -49,3 +49,13 @@ ul.pager
     :float left
   .next_link
     :float right
+
+.field-errors
+  :border-left 2px solid orange
+  :padding-left 10px
+  ul
+    :padding-bottom 10px
+  p
+    :font-size 1.3em
+    :font-weight bold
+    :margin-bottom 10px

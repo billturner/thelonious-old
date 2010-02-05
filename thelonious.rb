@@ -12,7 +12,7 @@ require 'rack-flash'
 require 'sass/plugin/rack'
 use Sass::Plugin::Rack
 
-class SinatraBlog < Sinatra::Application
+class Thelonious < Sinatra::Application
 
   # views & public
   set :public, File.join(File.dirname(__FILE__), 'public')
@@ -20,8 +20,8 @@ class SinatraBlog < Sinatra::Application
   set :lib, File.join(File.dirname(__FILE__), 'lib')
 
   # Sass via Rack settings
-  Sass::Plugin.options[:css_location] = File.join(SinatraBlog.public, 'stylesheets')
-  Sass::Plugin.options[:template_location] = File.join(SinatraBlog.public, 'stylesheets', 'sass')
+  Sass::Plugin.options[:css_location] = File.join(Thelonious.public, 'stylesheets')
+  Sass::Plugin.options[:template_location] = File.join(Thelonious.public, 'stylesheets', 'sass')
 
   # allow sessions & flash messages
   use Rack::Session::Cookie
@@ -128,9 +128,9 @@ class SinatraBlog < Sinatra::Application
     @post = Post.new
     haml :post_form
   end
-  # TODO: 1) Fix redirect; 2) force back to edit if errors
   post '/new_post' do
     authenticate!
+    @page_title = "Add Post"
     @post = Post.new(params[:post])
     if @post.save
       flash[:notice] = 'The new post was saved successfully'
@@ -148,6 +148,7 @@ class SinatraBlog < Sinatra::Application
   end
   post '/edit_post/:id' do
     authenticate!
+    @page_title = "Edit Post"
     @post = Post.find(params[:id])
     if @post.update_attributes(params[:post])
       flash[:notice] = 'The post was updated successfully'
@@ -170,11 +171,15 @@ class SinatraBlog < Sinatra::Application
     @page = Page.new
     haml :page_form
   end
-  # TODO: 1) Fix redirect; 2) force back to edit if errors
   post '/new_page' do
     authenticate!
-    @page = Page.create(params[:page])
-    redirect '/all_pages'
+    @page = Page.new(params[:page])
+    if @page.save
+      flash[:notice] = 'The new page was saved successfully'
+      redirect '/all_pages'
+    else
+      haml :page_form
+    end
   end
   get '/all_pages' do
     authenticate!
@@ -191,9 +196,14 @@ class SinatraBlog < Sinatra::Application
   end
   post '/edit_page/:id' do
     authenticate!
+    @page_title = "Edit Page"
     @page = Page.find(params[:id])
-    @page.update_attributes(params[:page])
-    redirect '/all_pages'
+    if @page.update_attributes(params[:page])
+      flash[:notice] = 'The page was updated successfully'
+      redirect '/all_pages'
+    else
+      haml :page_form
+    end
   end
 
 end

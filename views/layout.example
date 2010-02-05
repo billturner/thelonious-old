@@ -1,11 +1,7 @@
 !!! 5
 %html
   %head
-    %title
-      -if !@page_title.nil?
-        =@page_title
-        |
-      =BLOG_TITLE
+    %title= site_title(@page_title)
     =stylesheet_link_tag 'screen', :media => "screen, projection"
     =stylesheet_link_tag 'print', :media => "print"
     /[if lt IE 8]
@@ -61,6 +57,6 @@
           =BLOG_AUTHOR + '.'
           =succeed "." do
             Powered by 
-            =link_to "sinatrablog", 'http://github.com/billturner/sinatrablog', { :title => "A simple weblog application written by Bill Turner using Sinatra." }
+            =link_to "Thelonious", 'http://github.com/billturner/thelonious', { :title => "A simple weblog application written by Bill Turner using Sinatra." }
     - if USE_GOOGLE_ANALYTICS
       =haml :google_analytics, :layout => false

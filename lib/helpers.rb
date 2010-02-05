@@ -1,18 +1,9 @@
-class SinatraBlog
+class Thelonious
 
   module Helpers
 
-    def errors_for(o)
-      out = ''
-      if o.errors && !o.errors.empty?
-        out += '<div class="error_messages">'
-        out += '<h3 class="error_messages_header">The following errors have occurred:</h3>'
-        out += '<ul>'
-        o.errors.full_messages.each do |msg|
-          out += "<li>#{msg}</li>"
-        end
-        out += '</ul></div>'
-      end
+    def site_title(page_title = nil)
+      page_title.nil? ? "#{BLOG_DESCRIPTION} | #{BLOG_TITLE}" : "#{page_title} | #{BLOG_TITLE}"
     end
 
     def permalink_url(post)

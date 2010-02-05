@@ -1,11 +1,11 @@
 MongoMapper.connection = Mongo::Connection.new('localhost')
 
 configure :test do
-  MongoMapper.database = 'sinatrablog_test'
+  MongoMapper.database = 'thelonious_test'
 end
 
 configure :development, :production do
-  MongoMapper.database = 'sinatrablog'
+  MongoMapper.database = 'thelonious'
 end
 
 # load model file

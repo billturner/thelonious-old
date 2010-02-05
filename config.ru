@@ -12,8 +12,8 @@ require 'rack-flash'
 require 'sass/plugin/rack'
 use Sass::Plugin::Rack
 
-require 'application'
+require 'thelonious'
 
 map '/' do
-  run SinatraBlog
+  run Thelonious
 end
