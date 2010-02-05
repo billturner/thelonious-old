@@ -57,6 +57,6 @@
           =BLOG_AUTHOR + '.'
           =succeed "." do
             Powered by 
-            =link_to "Thelonious", 'http://github.com/billturner/thelonious', { :title => "A simple weblog application written by Bill Turner using Sinatra." }
+            =link_to "thelonious", 'http://github.com/billturner/thelonious', { :title => "A simple weblog application written by Bill Turner using Sinatra." }
     - if USE_GOOGLE_ANALYTICS
       =haml :google_analytics, :layout => false

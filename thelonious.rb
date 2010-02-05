@@ -25,7 +25,7 @@ class Thelonious < Sinatra::Application
 
   # allow sessions & flash messages
   use Rack::Session::Cookie
-  use Rack::Flash #, :sweep => true
+  use Rack::Flash, :sweep => true
 
   # turn off extra logging
   disable :logging
