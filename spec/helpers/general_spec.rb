@@ -31,12 +31,14 @@ describe 'Helpers' do
 
   it "should wrap the escaped content in a CDATA tag" do
     string = "This \"is\" some <span>text</span>"
-    esc = cdata_and_escape(string)
     cdata_and_escape(string).should eql("<![CDATA[This &quot;is&quot; some &lt;span&gt;text&lt;/span&gt;]]>")
   end
 
-  it "should convert text to markdown"
-
-  it "should generate a list of errors when invalid"
+  it "should convert text to markdown" do
+    string = "This is a paragraph\n\nAnd this is another paragraph with it's fancy \"quote\"\n\n"
+    markdown(string).should eql("<p>This is a paragraph</p>\n\n<p>And this is another paragraph with it&rsquo;s fancy &ldquo;quote&rdquo;</p>\n")
+    link = "[Google](http://google.com/)"
+    markdown(link).should eql("<p><a href=\"http://google.com/\">Google</a></p>\n")
+  end
 
 end

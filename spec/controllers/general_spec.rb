@@ -2,6 +2,10 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe "General View / Controller Spec" do
 
+  before(:each) do
+    @browser = Rack::Test::Session.new(Rack::MockSession.new(app, test_domain))
+  end
+
   it "should respond to /" do
     get '/'
     last_response.should be_ok

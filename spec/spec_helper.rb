@@ -22,6 +22,26 @@ Webrat.configure do |config|
   config.mode = :rack
 end
 
+module RequestSpecHelper
+
+  def login!
+    @browser.post '/login', { "login[username]" => LOGIN_USERNAME, "login[password]" => LOGIN_PASSWORD }
+  end
+
+  def body
+    @browser.last_response.body
+  end
+
+  def res
+    @browser.last_response
+  end
+
+  def test_domain
+    "#{BLOG_URL}".gsub(/http\:\/\//, '')
+  end
+
+end
+
 Spec::Runner.configure do |config|
 
   def app
@@ -31,6 +51,8 @@ Spec::Runner.configure do |config|
   config.include Rack::Test::Methods
   config.include Webrat::Methods
   config.include Webrat::Matchers
+  config.include Webrat::HaveTagMatcher
   config.include Thelonious::Helpers
+  config.include RequestSpecHelper
 
 end

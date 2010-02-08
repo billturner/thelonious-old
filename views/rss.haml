@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+!!! XML
 %rss{ :version => "2.0", :"xmlns:atom" => "http://www.w3.org/2005/Atom" }
   %channel
     %title= BLOG_TITLE
-    %link= "#{BLOG_URL}/"
-    %atom:link{ :href => "#{BLOG_URL}/rss", :rel => "self", :type => "application/rss+xml" }
-    %description= escape_html(BLOG_DESCRIPTION)
+    -#%atom:link{ :href => "#{BLOG_URL}/rss", :rel => "self", :type => "application/rss+xml" }/
+    %description= Rack::Utils.escape_html(BLOG_DESCRIPTION)
     -if !@posts.empty?
       %lastBuildDate= @posts.first.published_at.rfc822
     %language en-us
+    %link= "#{BLOG_URL}/"
     -if !@posts.empty?
       -@posts.each do |post|
         %item
