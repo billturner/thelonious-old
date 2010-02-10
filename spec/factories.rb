@@ -6,6 +6,6 @@ Factory.define :post do |p|
 end
 
 Factory.define :page do |pg|
-  pg.title  'This is a sample page'
-  pg.body   'This is some page content'
+  pg.title  "About"
+  pg.body   "This is my about page.\n\nHere is some about content."
 end

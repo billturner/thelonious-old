@@ -22,18 +22,22 @@
       #content{ :class => 'span-20' }
         =yield
       #sidebar{ :class => 'span-4 last' }
+        -if !Page.all.empty?
+          .sidebarbox
+            %h4#pages-header Pages
+            %ul#pages
+              -Page.all.each do |page|
+                %li
+                  =link_to page.title, page_url(page), { :rel => "bookmark", :title => "#{page.title}" }
         .sidebarbox
-          %h4 Pages
-          %ul
-            -Page.all.each do |page|
-              %li
-                =link_to page.title, page_url(page), { :rel => "bookmark", :title => "#{page.title}" }
+          %h4#more-content-header More Content
+          %ul#more-content
             %li
-              =link_to "All Posts", "/archive", { :rel => "bookmark", :title => "All archived posts at #{BLOG_TITLE}" }
+              =link_to "All Posts", "/archive", { :rel => "bookmark", :id => "archives", :title => "All archived posts at #{BLOG_TITLE}" }
             %li
-              =link_to "RSS", "/rss", { :title => "The RSS feed for new posts at #{BLOG_TITLE}" }
+              =link_to "RSS", "/rss", { :id => "feed", :title => "The RSS feed for new posts at #{BLOG_TITLE}" }
         .sidebarbox
-          %h4 About
+          %h4#about-header About
           =markdown(ABOUT_TEXT)
         -if logged_in?
           .sidebarbox
@@ -51,12 +55,7 @@
                 =link_to "Log out", "/logout", { :title => "Log out of your admin session" }
                 
       #footer{ :class => 'span-24 last' }
-        %p
-          All content copyright &copy;
-          ="#{Date.today.year},"
-          =BLOG_AUTHOR + '.'
-          =succeed "." do
-            Powered by 
-            =link_to "thelonious", 'http://github.com/billturner/thelonious', { :title => "A simple weblog application written by Bill Turner using Sinatra." }
+        :markdown
+          All content copyright &copy; #{Date.today.year} #{BLOG_AUTHOR}, unless otherwise specified. Powered by [thelonious](http://github.com/billturner/thelonious "A simple weblog application written by Bill Turner using Sinatra.").
     - if USE_GOOGLE_ANALYTICS
       =haml :google_analytics, :layout => false

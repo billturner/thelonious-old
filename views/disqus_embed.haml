@@ -1,7 +1,7 @@
 #disqus_thread
--if development?
-  %script{ :type => "text/javascript" }
-    var disqus_developer = 1;
-%script{ :type => "text/javascript", :src => "http://disqus.com/forums/#{DISQUS_SHORTNAME}/embed.js" }
-%noscript
-  %a{ :href => "http://#{DISQUS_SHORTNAME}.disqus.com/?url=ref" } View Discussion
+  -if development?
+    %script{ :type => "text/javascript" }
+      var disqus_developer = 1;
+  %script{ :type => "text/javascript", :src => "http://disqus.com/forums/#{DISQUS_SHORTNAME}/embed.js" }
+  %noscript
+    %a{ :href => "http://#{DISQUS_SHORTNAME}.disqus.com/?url=ref" } View Discussion

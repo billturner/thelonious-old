@@ -3,6 +3,6 @@
   .admin
     Admin:
     =link_to "Edit this Post", "/edit_post/#{post.id}"
-- if ALLOW_COMMENTS
+-if ALLOW_COMMENTS
   #comments
     =haml :disqus_embed, :layout => false

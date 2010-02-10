@@ -27,12 +27,12 @@ describe 'Model - Page' do
 
   it 'should have a title' do
     page = Factory.build(:page)
-    page.title.should == 'This is a sample page'
+    page.title.should == "About"
   end
 
   it 'should have a body' do
     page = Factory.build(:page)
-    page.body.should == 'This is some page content'
+    page.body.should == "This is my about page.\n\nHere is some about content."
   end
 
   it "should generate a slug" do

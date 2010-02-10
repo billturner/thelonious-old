@@ -81,3 +81,5 @@ class Page
     end
 
 end
+
+MongoMapper.ensure_indexes!

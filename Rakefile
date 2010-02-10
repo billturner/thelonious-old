@@ -4,17 +4,38 @@ require 'spec/rake/spectask'
 
 namespace :app do
 
-  desc "Move .example files into place"
+  desc "Copy .example files into place"
   task :setup do
     puts    "Moving settings file..."
-    system  "mv config/settings.rb.sample config/settings.rb"
+    system  "cp config/settings.rb.sample config/settings.rb"
     puts    "Moving database file..."
-    system  "mv lib/database.rb.sample lib/database.rb"
+    system  "cp lib/database.rb.sample lib/database.rb"
     puts    "Moving layout view file..."
-    system  "mv views/layout.example views/layout.haml"
+    system  "cp views/layout.example views/layout.haml"
     puts    "Moving custom CSS file..."
-    system  "mv views/stylesheets/custom.example views/stylesheets/custom.sass"
+    system  "cp views/stylesheets/custom.example views/stylesheets/custom.sass"
     puts    "Done."
+  end
+
+end
+
+namespace :testing do
+
+  desc "Swap default layout files into place BEFORE testing (and backing up originals)"
+  task :templates_on do
+    puts    "Backing up own layout"
+    system  "cp views/layout.haml views/layout.mine"
+    system  "cp public/stylesheets/sass/custom.sass public/stylesheets/sass/custom.mine"
+    puts    "Copying default template into place"
+    system  "cp views/layout.example views/layout.haml"
+    system  "cp public/stylesheets/sass/custom.example public/stylesheets/sass/custom.sass"
+  end
+
+  desc "Swap personal layout files into place AFTER testing"
+  task :templates_off do
+    puts    "Copying personal templates back into place"
+    system  "mv views/layout.mine views/layout.haml"
+    system  "mv public/stylesheets/sass/custom.mine public/stylesheets/sass/custom.sass"
   end
 
 end
