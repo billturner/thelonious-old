@@ -10,3 +10,6 @@
       &mdash;
       -post.tags.each do |tag|
         =link_to "##{tag}", tag_url(tag), { :rel => "category tag", :title => "View other posts tagged with '#{tag}'"}
+    -if ALLOW_COMMENTS && request.env['PATH_INFO'] !~ /^\/\d\d\d\d\//
+      &mdash;
+      =link_to "Comments", [permalink_url(post), "disqus_thread"].join("#")
