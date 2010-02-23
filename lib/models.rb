@@ -2,12 +2,15 @@ class Post
   include MongoMapper::Document
 
   key :title,         String
-  key :slug,          String
+  key :slug,          String,   :index => true
   key :body,          String
   key :published,     Boolean,  :default => false
   key :published_at,  Time
   key :tags,          Array,    :index => true
   timestamps!
+
+  ensure_index "post.tags"
+  ensure_index "post.slug"
 
   validates_presence_of   :title, :body
   validates_uniqueness_of :title
@@ -81,5 +84,3 @@ class Page
     end
 
 end
-
-MongoMapper.ensure_indexes!
