@@ -7,7 +7,7 @@ class Thelonious
     end
 
     def permalink_url(post)
-      "#{BLOG_URL}/#{post.created_at.strftime('%Y/%m')}/#{post.slug}"
+      "#{BLOG_URL}/#{post.published_at.strftime('%Y/%m')}/#{post.slug}"
     end
 
     def tag_url(tag)
