@@ -13,7 +13,7 @@ namespace :app do
     puts    "Moving layout view file..."
     system  "cp views/layout.example views/layout.haml"
     puts    "Moving custom CSS file..."
-    system  "cp views/stylesheets/custom.example views/stylesheets/custom.sass"
+    system  "cp public/stylesheets/sass/custom.example public/stylesheets/sass/custom.sass"
     puts    "Done."
   end
 
