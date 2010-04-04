@@ -11,7 +11,7 @@ We'll see how it goes.
 
 GEMS & VERSIONS NEEDED:
 
-* sinatra >= 0.9.4
+* sinatra >= 0.9.4 (works with 1.0!)
 * sinatra_more >= 0.3.29
 * mongo_mapper >= 0.6.10 (and its dependencies)
 * haml >= 2.2.16
@@ -32,8 +32,13 @@ SETTING IT UP:
 2. Run "rake app:setup" to copy the base example files
 3. Fill in your MongoDB information in lib/database.rb
 4. Adjust the settings (like admin user & pass) in config/settings.rb
-5. There may be another step. Hmm.
+5. To get the app started from the command line, use rackup:
+
+    rackup -p 4567 config.ru
+
+6. For hosting the app, I would suggest using Phusion Passenger: <http://www.modrails.com/>
 
 TODO:
 
 * Caching (esp. RSS & sitemap)
+* Pull sinatra_more code into a local lib (since sinatra_more has been all but abandoned for Padrino)
