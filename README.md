@@ -34,9 +34,10 @@ SETTING IT UP:
 4. Adjust the settings (like admin user & pass) in config/settings.rb
 5. To get the app started from the command line, use rackup:
 
-    rackup -p 4567 config.ru
+    `rackup -p 4567 config.ru`
 
-6. For hosting the app, I would suggest using Phusion Passenger: <http://www.modrails.com/>
+6. Pull it up in the browser <http://localhost:4567/> and login to start adding posts: <http://localhost:4567/login>
+7. For hosting the app, I would suggest using Phusion Passenger: <http://www.modrails.com/>
 
 TODO:
 
