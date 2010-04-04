@@ -32,10 +32,7 @@ SETTING IT UP:
 2. Run "rake app:setup" to copy the base example files
 3. Fill in your MongoDB information in lib/database.rb
 4. Adjust the settings (like admin user & pass) in config/settings.rb
-5. To get the app started from the command line, use rackup:
-
-    `rackup -p 4567 config.ru`
-
+5. To get the app started from the command line, use rackup: `rackup -p 4567 config.ru`
 6. Pull it up in the browser <http://localhost:4567/> and login to start adding posts: <http://localhost:4567/login>
 7. For hosting the app, I would suggest using Phusion Passenger: <http://www.modrails.com/>
 
