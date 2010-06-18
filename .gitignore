@@ -12,7 +12,6 @@ lib/database.rb
 config/settings.rb
 views/layout.haml
 public/stylesheets/*.css
-public/stylesheets/sass/custom.sass
 public/stylesheets/scss/custom.scss
 spec/test.sqlite3
 Capfile
