@@ -21,7 +21,7 @@ class Thelonious < Sinatra::Application
 
   # Sass via Rack settings
   Sass::Plugin.options[:css_location] = File.join(Thelonious.public, 'stylesheets')
-  Sass::Plugin.options[:template_location] = File.join(Thelonious.public, 'stylesheets', 'sass')
+  Sass::Plugin.options[:template_location] = File.join(Thelonious.public, 'stylesheets', 'scss')
 
   # allow sessions & flash messages
   use Rack::Session::Cookie

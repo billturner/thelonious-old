@@ -13,7 +13,7 @@ namespace :app do
     puts    "Moving layout view file..."
     system  "cp views/layout.example views/layout.haml"
     puts    "Moving custom CSS file..."
-    system  "cp public/stylesheets/sass/custom.example public/stylesheets/sass/custom.sass"
+    system  "cp public/stylesheets/scss/custom.example public/stylesheets/scss/custom.scss"
     puts    "Done."
   end
 
@@ -25,17 +25,17 @@ namespace :testing do
   task :templates_on do
     puts    "Backing up own layout"
     system  "cp views/layout.haml views/layout.mine"
-    system  "cp public/stylesheets/sass/custom.sass public/stylesheets/sass/custom.mine"
+    system  "cp public/stylesheets/scss/custom.scss public/stylesheets/scss/custom.mine"
     puts    "Copying default template into place"
     system  "cp views/layout.example views/layout.haml"
-    system  "cp public/stylesheets/sass/custom.example public/stylesheets/sass/custom.sass"
+    system  "cp public/stylesheets/scss/custom.example public/stylesheets/scss/custom.scss"
   end
 
   desc "Swap personal layout files into place AFTER testing"
   task :templates_off do
     puts    "Copying personal templates back into place"
     system  "mv views/layout.mine views/layout.haml"
-    system  "mv public/stylesheets/sass/custom.mine public/stylesheets/sass/custom.sass"
+    system  "mv public/stylesheets/scss/custom.mine public/stylesheets/scss/custom.scss"
   end
 
 end

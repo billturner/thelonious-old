@@ -9,6 +9,9 @@ require 'factory_girl'
 # bring in the app file
 require File.join(File.dirname(__FILE__), '..', 'thelonious')
 
+# Get Factories
+Factory.find_definitions
+
 # force test db
 MongoMapper.database = 'thelonious_test'
 

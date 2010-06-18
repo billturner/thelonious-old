@@ -57,9 +57,9 @@
       #footer{ :class => 'span-24 last' }
         :markdown
           All content copyright &copy; #{Date.today.year} #{BLOG_AUTHOR}, unless otherwise specified. Powered by [thelonious](http://github.com/billturner/thelonious "A simple weblog application written by Bill Turner using Sinatra.").
-    - if USE_GOOGLE_ANALYTICS
+    - if defined?(USE_GOOGLE_ANALYTICS)
       =haml :google_analytics, :layout => false
-    -if ALLOW_COMMENTS
+    -if defined?(ALLOW_COMMENTS)
       :javascript
         //<![CDATA[
         (function() {

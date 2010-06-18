@@ -1,3 +1,4 @@
+.rvmrc
 .DS_Store
 .DS_store
 **/.DS_Store
@@ -12,6 +13,7 @@ config/settings.rb
 views/layout.haml
 public/stylesheets/*.css
 public/stylesheets/sass/custom.sass
+public/stylesheets/scss/custom.scss
 spec/test.sqlite3
 Capfile
 config/deploy.rb
