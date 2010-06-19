@@ -16,11 +16,11 @@ LOGIN_USERNAME = 'login'
 LOGIN_PASSWORD = 'passwd'
 
 # comments by disqus
-ALLOW_COMMENTS = false
+# comment out or leave empty to not use
 DISQUS_SHORTNAME = 'weblogname'
 
 # google analytics tracking id
-USE_GOOGLE_ANALYTICS = false
+# comment out or leave empty to not use
 GOOGLE_ANALYTICS_ID = 'UA-XXXXX-X'
 
 # datetime for RSS feed

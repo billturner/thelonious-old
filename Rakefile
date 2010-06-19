@@ -1,6 +1,21 @@
 require 'rubygems'
+require 'sass/plugin'
 require 'sinatra' unless defined?(Sinatra)
 require 'spec/rake/spectask'
+
+namespace :sass do
+
+  desc "Build CSS files from SCSS"
+  task :build do
+    use Sass::Plugin
+    Sass::Plugin.options[:style] = :compact
+    Sass::Plugin.options[:syntax] = :scss
+    Sass::Plugin.options[:css_location] = File.join(File.dirname(__FILE__), 'public', 'stylesheets')
+    Sass::Plugin.options[:template_location] = File.join(File.dirname(__FILE__), 'public', 'stylesheets', 'scss')
+    Sass::Plugin.update_stylesheets
+  end
+
+end
 
 namespace :app do
 

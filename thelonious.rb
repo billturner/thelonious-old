@@ -8,20 +8,12 @@ require 'rdiscount'
 require 'active_support/values/time_zone'
 require 'rack-flash'
 
-# Use sass's Rack integration
-require 'sass/plugin/rack'
-use Sass::Plugin::Rack
-
 class Thelonious < Sinatra::Application
 
   # views & public
   set :public, File.join(File.dirname(__FILE__), 'public')
   set :views, File.join(File.dirname(__FILE__), 'views')
   set :lib, File.join(File.dirname(__FILE__), 'lib')
-
-  # Sass via Rack settings
-  Sass::Plugin.options[:css_location] = File.join(Thelonious.public, 'stylesheets')
-  Sass::Plugin.options[:template_location] = File.join(Thelonious.public, 'stylesheets', 'scss')
 
   # allow sessions & flash messages
   use Rack::Session::Cookie

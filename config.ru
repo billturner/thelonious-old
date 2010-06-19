@@ -8,10 +8,6 @@ require 'rdiscount'
 require 'active_support/values/time_zone'
 require 'rack-flash'
 
-# Use sass's Rack integration
-require 'sass/plugin/rack'
-use Sass::Plugin::Rack
-
 require 'thelonious'
 
 map '/' do

@@ -57,9 +57,9 @@
       #footer{ :class => 'span-24 last' }
         :markdown
           All content copyright &copy; #{Date.today.year} #{BLOG_AUTHOR}, unless otherwise specified. Powered by [thelonious](http://github.com/billturner/thelonious "A simple weblog application written by Bill Turner using Sinatra.").
-    - if defined?(USE_GOOGLE_ANALYTICS)
+    - if defined?(GOOGLE_ANALYTICS_ID)
       =haml :google_analytics, :layout => false
-    -if defined?(ALLOW_COMMENTS)
+    -if defined?(DISQUS_SHORTNAME)
       :javascript
         //<![CDATA[
         (function() {
@@ -70,6 +70,6 @@
             query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
           }
           }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/brilliantcorners/get_num_replies.js' + query + '"></' + 'script>');
+          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/#{DISQUS_SHORTNAME}/get_num_replies.js' + query + '"></' + 'script>');
         })();
         //]]>
