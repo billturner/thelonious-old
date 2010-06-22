@@ -15,6 +15,11 @@ namespace :sass do
     Sass::Plugin.update_stylesheets
   end
 
+  desc "Watch for changes to SCSS files (and rebuild)"
+  task :watch do
+    system "sass --watch public/stylesheets/scss:public/stylesheets"
+  end
+
 end
 
 namespace :app do

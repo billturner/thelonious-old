@@ -1,7 +1,9 @@
-%h2
-  =@page.title
-%div.post
-  =markdown(@page.body)
+%div#posts
+  %div.post
+    %h3
+      =@page.title  
+    %div.postbody
+      =markdown(@page.body)
 -if logged_in?
   .admin
     Admin:
